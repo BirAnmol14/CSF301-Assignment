@@ -5,8 +5,8 @@ typedef struct node{
 	struct node * next;
 }Node;
 typedef struct Grammar{
-	Node arr[Arr_Size];
+	Node rules[Arr_Size];
 }grammar;
 void newGrammar(grammar *);
-void newTerminal(Node *,char *);
-void newNonTerminal(Node *,char *);
+void newLHS(Node *,char *);
+void newRHS(Node *,char *);

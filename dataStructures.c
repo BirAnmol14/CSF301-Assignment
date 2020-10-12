@@ -4,14 +4,14 @@
 #include "dataStructures.h"
 void newGrammar(grammar *g){
 	for(int i=0;i<Arr_Size;i++){
-		(g->arr[i]).name=malloc(MAX_LENGTH*sizeof(char));
-		(g->arr[i]).next=NULL;
+		(g->rules[i]).name=malloc(MAX_LENGTH*sizeof(char));
+		(g->rules[i]).next=NULL;
 	}
 }
-void newTerminal(Node *h,char * str){
+void newLHS(Node *h,char * str){
 	strcpy(h->name,str);
 }
-void newNonTerminal(Node * head,char * str){
+void newRHS(Node * head,char * str){
 	Node * tmp=head;
 	while(tmp->next!=NULL){
 		tmp=tmp->next;
