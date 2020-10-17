@@ -3,6 +3,7 @@
 #include <string.h>
 #include "functions.h"
 grammar g;
+tokenStream * ts=NULL;
 void printOptions();
 void testOption(int);
 void option1();
@@ -41,6 +42,11 @@ void testOption(int option){
 }
 void option1(){
 	newGrammar(&g);
+	if(ts==NULL){
+		ts=newTokenStream();
+	}
+	tokeniseSourcecode("abc.txt",ts);
+	printTokenStream(ts);
 	puts("option 1");
 }
 void option2(){
