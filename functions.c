@@ -5,6 +5,34 @@
 #include <ctype.h>
 void readGrammar(char * filename,grammar * g){
 	puts("Reading Grammar");
+	FILE * fp= fopen(filename, "r");
+	
+	char * temp=(char*)malloc(sizeof(char)*MAX_LENGTH);
+	char delim;
+	
+	fscanf(fp,"%[^ \n]s",temp);
+	newLHS(&(g->arr[0]),temp);
+	
+	//printf("%s", temp);	(uncomment for debugging)
+	
+	for(int i=0; i<Arr_Size;){
+		delim=fgetc(fp);
+		if(delim==EOF){
+			break;
+		}
+		else if(delim=='\n'){
+			i++;
+			fscanf(fp,"%[^ \n]s",temp);
+			newLHS(&(g->arr[i]),temp);
+		}
+		else if(delim==' '){
+			fscanf(fp,"%[^ \n]s",temp);
+			newRHS(&(g->arr[i]),temp);
+		}
+			
+		//printf("%c",delim);	(uncomment for debugging)
+		//printf("%s",temp);	(uncomment for debugging)
+	}
 }
 void tokeniseSourcecode(char * filename,tokenStream * ts){
 	FILE * fp=fopen(filename,"r");
