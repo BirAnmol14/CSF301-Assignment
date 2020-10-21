@@ -10,6 +10,7 @@ typedef struct Grammar{
 void newGrammar(grammar *);
 void newLHS(Node *,char *);
 void newRHS(Node *,char *);
+void printGrammar(grammar *);
 typedef struct tokenNode{
 	char * lexeme;
 	char * token;

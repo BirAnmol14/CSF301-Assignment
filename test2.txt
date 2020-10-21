@@ -1,0 +1,18 @@
+program ()
+{
+	declare v1 : integer ;
+	declare list of variables s1 s2 s3 : real ;
+	declare B12_3 : jagged array [ 37 .. 41 ] [ ] of integer ;
+	declare myArr : array [ 4 .. 5 ] [ 70 .. 100 ] [ 1000 .. 1010 ] ;
+	declare v3 : boolean;
+	declare list of variables u v : array [ 2 .. 5 ] [ 3 .. 6 ] of integer ;
+	declare list of variables u v : jagged array [ 4 .. 7 ] [ ] of integer ;
+	R1 [ 4 ] : size 3 : values { 21 ; 34 ; 69 }
+	abc = bcd + 23 ;
+	c = 123 &&& v1 ;
+	abc = bcd * u ;
+	abc = bcd / 23 ;
+	abc = bcd ||| _2_3 ;
+	abc = bcd + a23 ;
+	
+}

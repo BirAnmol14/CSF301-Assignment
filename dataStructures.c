@@ -22,6 +22,24 @@ void newRHS(Node * head,char * str){
 	tmp->next=NULL;
 	strcpy(tmp->name,str);
 }
+void printGrammar(grammar * g){
+	if(g==NULL){
+		puts("Please Populate Grammar First");
+	}
+	puts("Printing Grammar");
+	for(int i=0;i<Arr_Size;i++){
+		Node * tmp =&(g->rules[i]);
+		if(!tmp->next){
+			continue;
+		}
+		printf("%d ",i);
+		while(tmp){
+			printf("%s ",tmp->name);
+			tmp=tmp->next;
+		}
+		puts("");
+	}
+}
 tokenStream * newTokenStream(){
 	tokenStream * tmp=malloc(1*sizeof(tokenStream));
 	tmp->head=NULL;

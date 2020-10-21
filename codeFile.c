@@ -41,13 +41,16 @@ void testOption(int option){
 	}
 }
 void option1(){
+	puts("\nOption 1\n");
 	newGrammar(&g);
+	readGrammar("grammarTest.txt",&g);
+	printGrammar(&g);
 	if(ts==NULL){
 		ts=newTokenStream();
 	}
-	tokeniseSourcecode("abc.txt",ts);
+	puts("\nTokenizing Source Code");
+	tokeniseSourcecode("test2.txt",ts);
 	printTokenStream(ts);
-	puts("option 1");
 }
 void option2(){
 	option1();

@@ -6,38 +6,34 @@
 void readGrammar(char * filename,grammar * g){
 	puts("Reading Grammar");
 	FILE * fp= fopen(filename, "r");
-	
-	char * temp=(char*)malloc(sizeof(char)*MAX_LENGTH);
-	char delim;
-	
-	fscanf(fp,"%[^ \n]s",temp);
-	newLHS(&(g->arr[0]),temp);
-	
-	//printf("%s", temp);	(uncomment for debugging)
-	
-	for(int i=0; i<Arr_Size;){
-		delim=fgetc(fp);
-		if(delim==EOF){
-			break;
+	if(fp){
+		char * temp =(char *)malloc(sizeof(char)*500);
+		int line=0;
+		while(fscanf(fp,"%[^\n]\n",temp)!=EOF){
+			char * temp1=(char *)malloc(sizeof(char)*500);
+			strcpy(temp1,temp);
+			int i=0;
+			char * tk=strtok(temp1," \t");
+			while(tk){
+				if(i==0)
+				{newLHS(&g->rules[line],tk);i++;}
+				else{
+					newRHS(&g->rules[line],tk);
+					i++;
+				}
+				tk=strtok(NULL," \t");
+			}
+			free(temp1);
+			line++;
 		}
-		else if(delim=='\n'){
-			i++;
-			fscanf(fp,"%[^ \n]s",temp);
-			newLHS(&(g->arr[i]),temp);
-		}
-		else if(delim==' '){
-			fscanf(fp,"%[^ \n]s",temp);
-			newRHS(&(g->arr[i]),temp);
-		}
-			
-		//printf("%c",delim);	(uncomment for debugging)
-		//printf("%s",temp);	(uncomment for debugging)
+		free(temp);
+	}else{
+		puts("No Such File Exists");
 	}
 }
 void tokeniseSourcecode(char * filename,tokenStream * ts){
 	FILE * fp=fopen(filename,"r");
 	if(fp){
-		puts("Here");
 		char line [500];
 		int line_count=0;
 		while(fscanf(fp,"%[^\n]\n",line)!=EOF){
@@ -90,6 +86,7 @@ char * getToken(char * lexeme){
 	if(strcmp(lexeme,"values")==0){return "VALUES_KWD";}
 	if(strcmp(lexeme,"..")==0){return "DOTDOUBLE";}
 	if(strcmp(lexeme,"R1")==0){return "ROW_INIT";}
+	if(strcmp(lexeme,"()")==0){return "BRACKETS";}
 	if(strcmp(lexeme,")")==0){return "CLS_RND";}
 	if(strcmp(lexeme,"(")==0){return "OPEN_RND";}
 	if(strcmp(lexeme,"]")==0){return "CLS_SQ";}
