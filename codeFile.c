@@ -42,7 +42,6 @@ void testOption(int option){
 }
 void option1(){
 	puts("\nOption 1\n");
-	newGrammar(&g);
 	readGrammar("grammarTest.txt",&g);
 	printGrammar(&g);
 	if(ts==NULL){

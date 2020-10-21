@@ -4,6 +4,7 @@
 #include <string.h>
 #include <ctype.h>
 void readGrammar(char * filename,grammar * g){
+	newGrammar(filename,g);
 	puts("Reading Grammar");
 	FILE * fp= fopen(filename, "r");
 	if(fp){

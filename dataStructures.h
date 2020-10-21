@@ -1,13 +1,13 @@
-#define Arr_Size 10
 #define MAX_LENGTH 25
+extern int grammarSize;
 typedef struct node{
 	char * name;
 	struct node * next;
 }Node;
 typedef struct Grammar{
-	Node rules[Arr_Size];
+	Node *rules;
 }grammar;
-void newGrammar(grammar *);
+void newGrammar(char *,grammar *);
 void newLHS(Node *,char *);
 void newRHS(Node *,char *);
 void printGrammar(grammar *);

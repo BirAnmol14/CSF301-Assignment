@@ -2,8 +2,23 @@
 #include <stdio.h>
 #include <string.h>
 #include "dataStructures.h"
-void newGrammar(grammar *g){
-	for(int i=0;i<Arr_Size;i++){
+int grammarSize=0;
+void newGrammar(char * filename,grammar *g){
+	FILE * fp=fopen(filename,"r");
+	if(fp){
+		char * temp=(char *)malloc(sizeof(char)*512);
+		int line=0;
+		while(fscanf(fp,"%[^\n]\n",temp)!=EOF){
+			line++;
+		}
+		free(temp);
+		fclose(fp);
+		grammarSize=line;
+	}else{
+		puts("No Such File Exists");
+	}
+	g->rules=(Node *)malloc(grammarSize*sizeof(Node));
+	for(int i=0;i<grammarSize;i++){
 		(g->rules[i]).name=malloc(MAX_LENGTH*sizeof(char));
 		(g->rules[i]).next=NULL;
 	}
@@ -27,11 +42,8 @@ void printGrammar(grammar * g){
 		puts("Please Populate Grammar First");
 	}
 	puts("Printing Grammar");
-	for(int i=0;i<Arr_Size;i++){
+	for(int i=0;i<grammarSize;i++){
 		Node * tmp =&(g->rules[i]);
-		if(!tmp->next){
-			continue;
-		}
 		printf("%d ",i);
 		while(tmp){
 			printf("%s ",tmp->name);
