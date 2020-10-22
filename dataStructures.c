@@ -89,6 +89,7 @@ void printTokenStream(tokenStream * ts){
 	}
 }
 typeExpressionTable * newTable(){
+	typeSize=0;
 	typeExpressionTable * t=malloc(1*sizeof(typeExpressionTable));
 	t->arr=NULL;
 	return t;
