@@ -3,6 +3,7 @@
 #include <string.h>
 #include "dataStructures.h"
 int grammarSize=0;
+int typeSize=0;
 void newGrammar(char * filename,grammar *g){
 	FILE * fp=fopen(filename,"r");
 	if(fp){
@@ -86,4 +87,49 @@ void printTokenStream(tokenStream * ts){
 		printf("%s %s %d\n",tmp->lexeme,tmp->token,tmp->line);
 		tmp=tmp->next;
 	}
+}
+typeExpressionTable * newTable(){
+	typeExpressionTable * t=malloc(1*sizeof(typeExpressionTable));
+	t->arr=NULL;
+	return t;
+}
+Type * newType(char * varName,category cat,char * rectSub,typeExpression te){
+	Type * t=malloc(1*sizeof(Type));
+	t->field1=malloc((strlen(varName)+1)*sizeof(char));
+	strcpy(t->field1,varName);
+	t->field2=cat;
+	if(rectSub==NULL){
+		t->field3=malloc(50*sizeof(char));
+		strcpy(t->field3,"not_applicable");
+	}else{
+		t->field3=malloc((strlen(rectSub)+1)*sizeof(char));
+		strcpy(t->field3,rectSub);
+	}
+	t->field4=te;
+	return t;
+}
+typeExpression newTypeExpression(char * s,category c){
+	typeExpression *te=malloc(1*sizeof(typeExpression));
+	if(c==Primitive){
+		te->primitive=malloc((strlen(s)+1)*sizeof(char));
+		strcpy(te->primitive,s);
+	}else if(c==Rectangular){
+		te->rectangular=malloc((strlen(s)+1)*sizeof(char));
+		strcpy(te->rectangular,s);
+	}else if(c==Jagged){
+		te->jagged=malloc((strlen(s)+1)*sizeof(char));
+		strcpy(te->jagged,s);
+	}
+	return *te;
+}
+void addType(typeExpressionTable * tab,Type * t){
+	if(typeSize==0){
+		tab->arr=malloc(1*sizeof(Type*));
+		tab->arr[0]=t;
+		typeSize++;
+		return ;
+	}
+	tab->arr=realloc(tab->arr,(typeSize+1)*sizeof(Type*));
+	tab->arr[typeSize]=t;
+	typeSize++;
 }

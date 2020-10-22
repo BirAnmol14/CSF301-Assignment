@@ -53,6 +53,20 @@ void tokeniseSourcecode(char * filename,tokenStream * ts){
 		puts("No such File Exists");
 	}
 }
+void printTypeExpressionTable(typeExpressionTable* t){
+	for(int i=0;i<typeSize;i++){
+		Type * tp=t->arr[i];
+		if(tp->field2==Primitive){
+			printf("%s Primitive %s %s\n",tp->field1,tp->field3,(tp->field4).primitive);
+		}
+		else if(tp->field2==Rectangular){
+			printf("%s Rectangular_Array %s %s\n",tp->field1,tp->field3,(tp->field4).rectangular);
+		}
+		else if(tp->field2==Jagged){
+			printf("%s Jagged_Array %s %s\n",tp->field1,tp->field3,(tp->field4).jagged);
+		}
+	}
+}
 int isValidVarId(char * var){
 	if(var==NULL){
 		return 0;
