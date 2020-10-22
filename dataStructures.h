@@ -41,5 +41,4 @@ typeExpressionTable* newTable();
 Type * newType(char *,category,char *,typeExpression);
 typeExpression newTypeExpression(char *,category);
 void addType(typeExpressionTable *,Type *);
-void printTab(typeExpressionTable *);
 
