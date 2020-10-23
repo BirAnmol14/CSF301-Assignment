@@ -19,7 +19,8 @@ void readGrammar(char * filename,grammar * g){
 				if(i==0)
 				{newLHS(&g->rules[line],tk);i++;}
 				else{
-					newRHS(&g->rules[line],tk);
+					if(strcmp(tk,"\\0")==0){newRHS(&g->rules[line],"");}
+					else{newRHS(&g->rules[line],tk);}
 					i++;
 				}
 				tk=strtok(NULL," \t");
@@ -44,8 +45,10 @@ void tokeniseSourcecode(char * filename,tokenStream * ts){
 			strcpy(line1,line);
 			char * tk=strtok(line1," \t");
 			while(tk){
+				//printf("Testing something %s\n",tk);
 				ts=addTokenNode(ts,tk,getToken(tk),line_count);
 				tk=strtok(NULL," \t");
+				
 			}
 		}
 		fclose(fp);
@@ -70,7 +73,7 @@ void printTypeExpressionTable(typeExpressionTable* t){
 int isValidVarId(char * var){
 	if(var==NULL){
 		return 0;
-	}	
+	}
 	if(strlen(var)==0 || strlen(var)>20){
 		return 0;
 	}
@@ -87,6 +90,7 @@ int isValidVarId(char * var){
 	return valid;
 }
 char * getToken(char * lexeme){
+	//printf("%s",lexeme);
 	if(strcmp(lexeme,"declare")==0){return "DECLARE_KWD";}
 	if(strcmp(lexeme,"program")==0){return "PROGRAM_KWD";}
 	if(strcmp(lexeme,"boolean")==0){return "TYPE_KWD";}
@@ -123,7 +127,7 @@ char * getToken(char * lexeme){
 	for(int i=0;i<strlen(lexeme);i++){
 		if(!isdigit(lexeme[i])){
 			Num=0;
-			break;	
+			break;
 		}
 	}
 	if(Num){return "STATIC_INT";}
