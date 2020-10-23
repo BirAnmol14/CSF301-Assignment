@@ -44,11 +44,9 @@ void tokeniseSourcecode(char * filename,tokenStream * ts){
 			char line1[500];
 			strcpy(line1,line);
 			char * tk=strtok(line1," \t");
-			while(tk){
-				//printf("Testing something %s\n",tk);
+			while(tk){				
 				ts=addTokenNode(ts,tk,getToken(tk),line_count);
-				tk=strtok(NULL," \t");
-				
+				tk=strtok(NULL," \t");				
 			}
 		}
 		fclose(fp);
@@ -89,8 +87,7 @@ int isValidVarId(char * var){
 	}
 	return valid;
 }
-char * getToken(char * lexeme){
-	//printf("%s",lexeme);
+char * getToken(char * lexeme){	
 	if(strcmp(lexeme,"declare")==0){return "DECLARE_KWD";}
 	if(strcmp(lexeme,"program")==0){return "PROGRAM_KWD";}
 	if(strcmp(lexeme,"boolean")==0){return "TYPE_KWD";}
