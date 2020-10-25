@@ -109,18 +109,19 @@ Type * newType(char * varName,category cat,char * rectSub,typeExpression te){
 	t->field4=te;
 	return t;
 }
-typeExpression newTypeExpression(char * s,category c){
+typeExpression newRectTypeExpression(RectArr * rarr){
 	typeExpression *te=malloc(1*sizeof(typeExpression));
-	if(c==Primitive){
-		te->primitive=malloc((strlen(s)+1)*sizeof(char));
-		strcpy(te->primitive,s);
-	}else if(c==Rectangular){
-		te->rectangular=malloc((strlen(s)+1)*sizeof(char));
-		strcpy(te->rectangular,s);
-	}else if(c==Jagged){
-		te->jagged=malloc((strlen(s)+1)*sizeof(char));
-		strcpy(te->jagged,s);
-	}
+	te->rectangular=rarr;
+	return *te;
+}
+typeExpression newPrimTypeExpression(primitive p){
+	typeExpression *te=malloc(1*sizeof(typeExpression));
+	te->primType=p;
+	return *te;
+}
+typeExpression newJagTypeExpression(JagArr * jarr){
+	typeExpression *te=malloc(1*sizeof(typeExpression));
+	te->jagged=jarr;
 	return *te;
 }
 void addType(typeExpressionTable * tab,Type * t){
@@ -134,3 +135,150 @@ void addType(typeExpressionTable * tab,Type * t){
 	tab->arr[typeSize]=t;
 	typeSize++;
 }
+RectArr * newRectArr(int dim){
+		RectArr * tmp=malloc(1*sizeof(RectArr));
+		tmp->type=malloc(sizeof(char) * (strlen("rectangularArray")+1));
+		strcpy(tmp->type,"rectangularArray");
+		tmp->dimensions=malloc(20*sizeof(char));
+		itoa(dim,tmp->dimensions);
+		tmp->basic="integer";
+		tmp->range=malloc(dim*sizeof(arrRange));//Manually populate ranges after this
+		return tmp;
+}
+void populateRectArr(RectArr * rarr,int index,char *lo,char *hi){
+	(rarr->range[index]).low=lo;
+	(rarr->range[index]).high=hi;
+}
+char * printRectArr(RectArr * rarr){
+	char * string=malloc(1024*sizeof(char));
+	char * buff = malloc(20 * sizeof(char));
+	strcpy(string,"<type=");
+	strcat(string,rarr->type);
+	strcat(string,", dimensions=");
+	strcat(string,rarr->dimensions);
+	int dim=atoi(rarr->dimensions);
+	for(int i=0;i<dim;i++){
+		itoa(i+1,buff);
+		strcat(string,", range_R");
+		strcat(string,buff);
+		strcat(string,"=(");
+		strcat(string,rarr->range[i].low);
+		strcat(string,",");
+		strcat(string,rarr->range[i].high);
+		strcat(string,")");
+	}
+	strcat(string,", basicElementType=");
+	strcat(string,rarr->basic);
+	strcat(string,">");
+	free(buff);
+	return string;
+}
+char * printPrimType(primitive p){
+	char * string=malloc(1024*sizeof(char));
+	strcpy(string,"<type=");
+	if(p==Int){
+		strcat(string,"integer");
+	}else if(p==Real){
+		strcat(string,"real");
+	}
+	else if(p==Bool){
+		strcat(string,"boolean");
+	}	
+	strcat(string,">");
+	return string;
+}
+JagArr * newJagArr(int dim,char * lo,char *hi){
+		JagArr * tmp=malloc(1*sizeof(JagArr));
+		tmp->type=malloc(sizeof(char) * (strlen("jaggedArray")+1));
+		strcpy(tmp->type,"jaggedArray");
+		tmp->dimensions=malloc(20*sizeof(char));
+		itoa(dim,tmp->dimensions);
+		tmp->basic="integer";
+		(tmp->r1).low=lo;
+		(tmp->r1).high=hi;
+		int h=atoi(hi);
+		int l=atoi(lo);
+		tmp->range=malloc((h-l+1)*sizeof(jagRange));//Manually populate ranges after this
+		return tmp;
+}
+void populateJagArr(JagArr * jarr,int index,char * sz,int list){
+	(jarr->range[index]).size=sz;
+	if(list==0){
+		(jarr->range[index]).subRange=NULL;
+	}else{
+		(jarr->range[index]).subRange=malloc(atoi(sz)*sizeof(char *)); //Manually loop and fill values
+	}
+}
+void populateJagArrSubrange(JagArr * jarr,int index,int subindex,char * val){
+	(jarr->range[index]).subRange[subindex]=val;
+}
+char * printJagArr(JagArr * jarr){
+	char * string=malloc(1024*sizeof(char));
+	char * buff = malloc(20 * sizeof(char));
+	strcpy(string,"<type=");
+	strcat(string,jarr->type);
+	strcat(string,", dimensions=");
+	strcat(string,jarr->dimensions);
+	strcat(string,", range_R1=(");
+	strcat(string,(jarr->r1).low);
+	strcat(string,",");
+	strcat(string,(jarr->r1).high);
+	strcat(string,")");
+	int h=atoi((jarr->r1).high);
+	int l=atoi((jarr->r1).low);
+	strcat(string,", range_R2=( ");
+	for(int i=0;i<h-l+1;i++){
+			strcat(string,(jarr->range[i]).size);
+			if(jarr->range[i].subRange!=NULL){
+				strcat(string,"[ ");
+				int sz=atoi((jarr->range[i]).size);
+				for(int j=0;j<sz;j++){
+					strcat(string,(jarr->range[i]).subRange[j]);
+					if(j!=sz-1){
+						strcat(string,",");
+					}
+					else{
+						strcat(string," ");
+					}
+				}
+				strcat(string,"]");
+			}
+			if(i!=h-l){
+				strcat(string,", ");
+			}else{
+				strcat(string," ");
+			}
+	}
+	strcat(string,")");
+	strcat(string,", basicElementType=");
+	strcat(string,jarr->basic);
+	strcat(string,">");
+	free(buff);
+	return string;
+}
+void itoa(int n, char s[])
+ {
+     int i, sign;
+ 
+     if ((sign = n) < 0)  
+         n = -n;          
+     i = 0;
+     do {     
+         s[i++] = n % 10 + '0';   
+     } while ((n /= 10) > 0);     
+     if (sign < 0)
+         s[i++] = '-';
+     s[i] = '\0';
+     reverse(s);
+ }
+ void reverse(char s[])
+ {
+     int i, j;
+     char c;
+ 
+     for (i = 0, j = strlen(s)-1; i<j; i++, j--) {
+         c = s[i];
+         s[i] = s[j];
+         s[j] = c;
+     }
+ }

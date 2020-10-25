@@ -57,10 +57,51 @@ void option2(){
 	puts("option 2");
 	puts("Creating Type Expression Table");
 	tab=newTable();
-	addType(tab,newType("abc",Primitive,NULL,newTypeExpression("<type=integer>",Primitive)));
-	addType(tab,newType("abc3",Rectangular,"static",newTypeExpression("<type=rectangularArray,dimension=1,range_R1=(3,10),basicElementType=integer>",Rectangular)));
-	addType(tab,newType("abc2",Rectangular,"dynamic",newTypeExpression("<type=rectangularArray,dimensions=2,range_R1=(3,6),rangeR2=(15,34),basicElementype=integer>",Jagged)));
-	addType(tab,newType("abc1",Jagged,NULL,newTypeExpression("<type=jaggedArray,dimensions=2,range_R1=(4,7),rangeR2=(2,4,10,5),basicElementType=integer>",Rectangular)));
+	addType(tab,newType("abc",Primitive,NULL,newPrimTypeExpression(Int)));
+	addType(tab,newType("abc1",Primitive,NULL,newPrimTypeExpression(Real)));
+	addType(tab,newType("abc2",Primitive,NULL,newPrimTypeExpression(Bool)));
+	RectArr * rarr=newRectArr(1);
+	populateRectArr(rarr,0,"3","7");
+	addType(tab,newType("abc3",Rectangular,"static",newRectTypeExpression(rarr)));
+	rarr=newRectArr(2);
+	populateRectArr(rarr,0,"abc","7");
+	populateRectArr(rarr,1,"25","_xvar");
+	addType(tab,newType("abc4",Rectangular,"dynamic",newRectTypeExpression(rarr)));
+	rarr=newRectArr(3);
+	populateRectArr(rarr,0,"1","7");
+	populateRectArr(rarr,1,"25","31");
+	populateRectArr(rarr,2,"100","1011");
+	addType(tab,newType("abc6",Rectangular,"static",newRectTypeExpression(rarr)));
+	
+	//2D Jagged Example from sample in assignment given under type expression heading
+	JagArr* jarr=newJagArr(2,"3","8");
+	populateJagArr(jarr,0,"3",0);
+	populateJagArr(jarr,1,"6",0);
+	populateJagArr(jarr,2,"2",0);
+	populateJagArr(jarr,3,"4",0);
+	populateJagArr(jarr,4,"1",0);
+	populateJagArr(jarr,5,"5",0);
+	addType(tab,newType("abc7",Jagged,NULL,newJagTypeExpression(jarr)));
+	
+	//3D Jagged Example from sample in assignment given under type expression heading
+	jarr=newJagArr(3,"4","7");
+	populateJagArr(jarr,0,"3",1);
+	populateJagArrSubrange(jarr,0,0,"5");
+	populateJagArrSubrange(jarr,0,1,"3");
+	populateJagArrSubrange(jarr,0,2,"5");
+	populateJagArr(jarr,1,"2",1);
+	populateJagArrSubrange(jarr,1,0,"3");
+	populateJagArrSubrange(jarr,1,1,"5");
+	populateJagArr(jarr,2,"3",1);
+	populateJagArrSubrange(jarr,2,0,"5");
+	populateJagArrSubrange(jarr,2,1,"4");
+	populateJagArrSubrange(jarr,2,2,"3");
+	populateJagArr(jarr,3,"4",1);
+	populateJagArrSubrange(jarr,3,0,"2");
+	populateJagArrSubrange(jarr,3,1,"5");
+	populateJagArrSubrange(jarr,3,2,"4");
+	populateJagArrSubrange(jarr,3,3,"4");
+	addType(tab,newType("abc8",Jagged,NULL,newJagTypeExpression(jarr)));
 }
 void option3(){
 	option2();

@@ -29,6 +29,7 @@ void readGrammar(char * filename,grammar * g){
 			line++;
 		}
 		free(temp);
+		fclose(fp);
 	}else{
 		puts("No Such File Exists");
 	}
@@ -58,13 +59,13 @@ void printTypeExpressionTable(typeExpressionTable* t){
 	for(int i=0;i<typeSize;i++){
 		Type * tp=t->arr[i];
 		if(tp->field2==Primitive){
-			printf("%s Primitive %s %s\n",tp->field1,tp->field3,(tp->field4).primitive);
+			printf("%s Primitive %s %s\n",tp->field1,tp->field3,printPrimType((tp->field4).primType));
 		}
 		else if(tp->field2==Rectangular){
-			printf("%s Rectangular_Array %s %s\n",tp->field1,tp->field3,(tp->field4).rectangular);
+			printf("%s Rectangular_Array %s %s\n",tp->field1,tp->field3,printRectArr((tp->field4).rectangular));
 		}
 		else if(tp->field2==Jagged){
-			printf("%s Jagged_Array %s %s\n",tp->field1,tp->field3,(tp->field4).jagged);
+			printf("%s Jagged_Array %s %s\n",tp->field1,tp->field3,printJagArr((tp->field4).jagged));
 		}
 	}
 }
