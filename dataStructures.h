@@ -28,6 +28,7 @@ tokenNode * newTokenNode(char *,char *,int);
 void printTokenStream(tokenStream *);
 typedef enum category{Primitive,Rectangular,Jagged}category;
 typedef enum primitive{Int,Real,Bool} primitive;
+primitive getType(char *);
 typedef struct arrRange{
 	char * low;
 	char * high;

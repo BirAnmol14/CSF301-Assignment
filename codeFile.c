@@ -59,9 +59,9 @@ void option2(){
 	tab=newTable();
 
 	//Populating Primitive variables
-	addType(tab,newType("abc",Primitive,NULL,newPrimTypeExpression(Int)));
-	addType(tab,newType("abc1",Primitive,NULL,newPrimTypeExpression(Real)));
-	addType(tab,newType("abc2",Primitive,NULL,newPrimTypeExpression(Bool)));
+	addType(tab,newType("abc",Primitive,NULL,newPrimTypeExpression(getType("integer"))));
+	addType(tab,newType("abc1",Primitive,NULL,newPrimTypeExpression(getType("real"))));
+	addType(tab,newType("abc2",Primitive,NULL,newPrimTypeExpression(getType("boolean"))));
 
 	//Populating Rectangular array
 	//1D

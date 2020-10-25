@@ -256,6 +256,17 @@ char * printJagArr(JagArr * jarr){
 	free(buff);
 	return string;
 }
+primitive getType(char *s){
+	if(strcmp(s,"integer")==0){
+		return Int;
+	}
+	if(strcmp(s,"boolean")==0){
+		return Bool;
+	}
+	if(strcmp(s,"real")==0){
+		return Real;
+	}
+}	
 void itoa(int n, char s[])
  {
      int i, sign;
