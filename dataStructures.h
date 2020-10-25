@@ -76,3 +76,16 @@ char * printPrimType(primitive);
 char * printJagArr(JagArr *);
 void itoa(int,char *);
 void reverse(char *);
+
+//Hash Map
+typedef struct mapNode
+{
+    int value;
+	char * key;
+    struct mapNode *next;
+} mapNode;
+void newHashMap(int size);
+int hashValue(char * key);
+void add(char * key,int value);
+mapNode * search(char * key);
+void printMap();

@@ -7,6 +7,7 @@ void readGrammar(char * filename,grammar * g){
 	newGrammar(filename,g);
 	puts("Reading Grammar");
 	FILE * fp= fopen(filename, "r");
+	
 	if(fp){
 		char * temp =(char *)malloc(sizeof(char)*500);
 		int line=0;
@@ -17,7 +18,7 @@ void readGrammar(char * filename,grammar * g){
 			char * tk=strtok(temp1," \t");
 			while(tk){
 				if(i==0)
-				{newLHS(&g->rules[line],tk);i++;}
+				{newLHS(&g->rules[line],tk);i++;add(tk,line);}
 				else{
 					if(strcmp(tk,"\\0")==0){newRHS(&g->rules[line],"");}
 					else{newRHS(&g->rules[line],tk);}
@@ -29,6 +30,7 @@ void readGrammar(char * filename,grammar * g){
 			line++;
 		}
 		free(temp);
+	
 		fclose(fp);
 	}else{
 		puts("No Such File Exists");

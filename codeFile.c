@@ -45,12 +45,39 @@ void option1(){
 	puts("\nOption 1\n");
 	readGrammar("grammar.txt",&g);
 	printGrammar(&g);
+	printMap();
 	if(ts==NULL){
 		ts=newTokenStream();
 	}
 	puts("\nTokenizing Source Code");
 	tokeniseSourcecode("sampleprogram.txt",ts);
 	printTokenStream(ts);
+	
+	mapNode* t=search("ALPHABET");
+	if(t){
+		printf("Key: %s\n",t->key);
+		printf("Indices in Grammar ds: line number grammar.txt-1\n");
+		while(t){
+			printf("%d ",t->value);
+			t=t->next;
+		}
+		printf("NULL\n");
+	}else{
+		printf("Not Present");
+	}
+	
+	t=search("A+=fLPHABET");
+	if(t){
+		printf("Key: %s\n",t->key);
+		printf("Indices in Grammar ds: line number grammar.txt-1\n");
+		while(t){
+			printf("%d ",t->value);
+			t=t->next;
+		}
+		printf("NULL\n");
+	}else{
+		printf("Not Present");
+	}
 }
 void option2(){
 	option1();

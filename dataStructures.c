@@ -4,6 +4,8 @@
 #include "dataStructures.h"
 int grammarSize=0;
 int typeSize=0;
+mapNode ** map=NULL;
+int mapSize=0;
 void newGrammar(char * filename,grammar *g){
 	FILE * fp=fopen(filename,"r");
 	if(fp){
@@ -23,6 +25,7 @@ void newGrammar(char * filename,grammar *g){
 		(g->rules[i]).name=malloc(MAX_LENGTH*sizeof(char));
 		(g->rules[i]).next=NULL;
 	}
+	newHashMap(5*grammarSize);
 }
 void newLHS(Node *h,char * str){
 	strcpy(h->name,str);
@@ -293,3 +296,69 @@ void itoa(int n, char s[])
          s[j] = c;
      }
  }
+ 
+ //HashMap
+ void newHashMap(int size)
+{
+    if(map!=NULL){free(map);}
+	map=malloc(size*sizeof(mapNode *));
+    for(int i = 0; i < size; i++){
+		map[i] = NULL;
+	} 
+	mapSize=size;
+}
+int hashValue(char * key){
+	int hash = 31;
+	for (int i = 0; i < strlen(key); i++) {
+		hash = hash*7 + key[i]*(i+1);
+	}
+    hash%=mapSize;
+	return hash>0?hash:-hash;
+}
+void add(char * key,int value)
+{
+	
+    mapNode *tmp = malloc(sizeof(mapNode));
+	tmp->key=NULL;
+    tmp->value = value;
+    tmp->next = NULL;
+	int hash=hashValue(key);
+    if(map[hash] == NULL){
+		tmp->key=malloc((strlen(key)+1)*sizeof(char));
+		strcpy(tmp->key,key);
+		map[hash] = tmp;
+	}
+    else
+    {
+        mapNode *h = map[hash];
+        while(h->next)
+        {
+            h = h->next;
+        }
+        h->next = tmp;
+    }
+}
+mapNode * search(char * key)
+{
+    int hash = hashValue(key);
+    mapNode *temp = map[hash];
+    return temp;
+}
+
+void printMap()
+{
+    for(int i = 0; i < mapSize; i++)
+    {
+        mapNode *temp = map[i];
+        if(temp!=NULL){
+			printf("map[%d] with key %s\n",i,temp->key);
+			
+			while(temp)
+			{
+				printf("%d -->",temp->value);
+				temp = temp->next;
+			}
+			printf("NULL\n");
+		}
+    }
+}
