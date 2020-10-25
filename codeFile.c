@@ -57,16 +57,23 @@ void option2(){
 	puts("option 2");
 	puts("Creating Type Expression Table");
 	tab=newTable();
+
+	//Populating Primitive variables
 	addType(tab,newType("abc",Primitive,NULL,newPrimTypeExpression(Int)));
 	addType(tab,newType("abc1",Primitive,NULL,newPrimTypeExpression(Real)));
 	addType(tab,newType("abc2",Primitive,NULL,newPrimTypeExpression(Bool)));
+
+	//Populating Rectangular array
+	//1D
 	RectArr * rarr=newRectArr(1);
 	populateRectArr(rarr,0,"3","7");
 	addType(tab,newType("abc3",Rectangular,"static",newRectTypeExpression(rarr)));
+	//2D - dynamic as you add variable names
 	rarr=newRectArr(2);
 	populateRectArr(rarr,0,"abc","7");
 	populateRectArr(rarr,1,"25","_xvar");
 	addType(tab,newType("abc4",Rectangular,"dynamic",newRectTypeExpression(rarr)));
+	//3D
 	rarr=newRectArr(3);
 	populateRectArr(rarr,0,"1","7");
 	populateRectArr(rarr,1,"25","31");

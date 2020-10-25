@@ -45,7 +45,7 @@ void printGrammar(grammar * g){
 	puts("Printing Grammar");
 	for(int i=0;i<grammarSize;i++){
 		Node * tmp =&(g->rules[i]);
-		printf("%d ",i);
+		printf("%d ",i+1);
 		while(tmp){
 			printf("%s ",tmp->name);
 			tmp=tmp->next;
