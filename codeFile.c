@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "functions.h"
+#include "parseTreeFunctions.h"
 grammar g;
 tokenStream * ts=NULL;
 typeExpressionTable * tab=NULL;
@@ -78,6 +79,13 @@ void option1(){
 	}else{
 		printf("Not Present");
 	}
+	parseTree * root;
+	if(createParseTree(root , ts, g))
+		printf("\nTree created\n");
+	else
+		printf("\nTree creation failed\n");
+
+	
 }
 void option2(){
 	option1();

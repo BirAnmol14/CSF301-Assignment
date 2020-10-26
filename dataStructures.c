@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "dataStructures.h"
+#include "parseTreeFunctions.h"
+
 int grammarSize=0;
 int typeSize=0;
 mapNode ** map=NULL;
@@ -362,3 +364,82 @@ void printMap()
 		}
     }
 }
+
+// Parse Tree DS
+parseTree * newNode(char * tkn){
+	parseTree *node= (parseTree *)malloc(sizeof(parseTree));
+	node->token= tkn;
+	node->child= NULL;
+
+	return node;
+}
+
+parseTree * addChild(parseTree * parent, parseTree * child){
+	if(parent->child== NULL){
+		parent->child= (parseTree *)malloc(sizeof(parseTree));
+		parent->child= child;
+	}
+	else{
+		parseTree * chd= parent->child;
+		while(chd->sibling != NULL){
+			chd= chd->sibling;
+		}
+		chd->sibling= child;
+		child->sibling= NULL;
+	}
+	return parent;
+}
+
+void freeChildren(parseTree * node){
+	parseTree * child= node->child;
+	if(child== NULL)
+		return;
+	parseTree * temp;
+	while(child->sibling != NULL){
+		temp= child->sibling;
+		free(child);
+		child= temp;
+	}
+	free(child);
+}
+// Stack
+  
+Stack* createStack(unsigned capacity) 
+{ 
+    Stack* stack = (Stack*)malloc(sizeof(struct Stack)); 
+    stack->capacity = capacity; 
+    stack->top = -1; 
+    stack->token = (char**)malloc(stack->capacity * sizeof(char *)); 
+    return stack; 
+} 
+  
+int isFull(Stack* stack) 
+{ 
+    return stack->top == stack->capacity - 1; 
+} 
+  
+int isEmpty(Stack* stack) 
+{ 
+    return stack->top == -1; 
+} 
+  
+void push(Stack* stack, char * item) 
+{ 
+    if (isFull(stack)) 
+        return; 
+    stack->token[++stack->top] = item; 
+} 
+  
+char * pop(Stack* stack) 
+{ 
+    if (isEmpty(stack)) 
+        return NULL; 
+    return stack->token[stack->top--]; 
+} 
+  
+char * peek(Stack* stack) 
+{ 
+    if (isEmpty(stack)) 
+        return NULL; 
+    return stack->token[stack->top]; 
+} 

@@ -84,6 +84,28 @@ typedef struct mapNode
 	char * key;
     struct mapNode *next;
 } mapNode;
+
+// Parse Tree
+typedef struct parsetree{
+ char* token;
+ struct parsetree * child;
+struct parsetree * sibling;
+ typeExpression type;
+}parseTree;
+
+typedef struct Stack { 
+    int top; 
+    unsigned capacity; 
+    char ** token; 
+}Stack; 
+
+Stack* createStack(unsigned capacity);
+int isEmpty(Stack* stack);
+int isFull(Stack* stack);
+void push(Stack* stack, char *);
+char * peek(Stack* stack);
+char * pop(Stack* stack);
+
 void newHashMap(int size);
 int hashValue(char * key);
 void add(char * key,int value);
