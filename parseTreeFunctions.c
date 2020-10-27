@@ -17,7 +17,12 @@ int isTerminal(char *token)
     }
     return 0;
 }
-
+void printStack(Stack* st){
+  int count = st->top;
+  while (count--){
+    // printf("Element %s\n",st->token[count]);
+  }
+}
 int createParseTree(parseTree *t, tokenStream *s, grammar G)
 {
     st = createStack(MAXCAPACITY);
@@ -33,20 +38,24 @@ int createParseTree(parseTree *t, tokenStream *s, grammar G)
 
 int checkTree(grammar *G, tokenNode *tn, parseTree *parent)
 {
+
+
     char *tkn;
     tkn = peek(st);
     int flag = 1;
 
     // printf("tn- %s\n", tn->token);
-    printf("tkn= %s\n", tkn);
+    // printf("tkn= %s\n", tkn);
     if (isTerminal(tkn))
     {
         pop(st);
 
-        printf("\nTerminal found- %s\n", tkn);
-        printf("\nToken stream- %s\n", tn->lexeme);
+        // printf("\nTerminal found- %s\n", tkn);
+        // printf("\nToken stream- %s\n", tn->lexeme);
+        // printf("\nTring Compare %d\n",strcmp(tkn, tn->lexeme) );
         if (!strcmp(tkn, tn->lexeme))
-        {   printf("And it matches the stream\n");
+        {
+          // printf("And it matches the stream\n");
             parseTree *node = newNode(tn->lexeme);
             addChild(parent, node);
             tn = tn->next;
@@ -65,9 +74,12 @@ int checkTree(grammar *G, tokenNode *tn, parseTree *parent)
         tokenNode* temp = tn;
         parseTree *currNode;
         push(st, "@$@$");
+        // puts("**********************************");
+        // printStack(st);
+        // puts("**********************************");
 
         mapNode *rules_list = search(tkn);
-        // printf("\nStack top- %s\n", peek(st));
+        //printf("\nStack top- %s\n", peek(st));
         while (rules_list && flag)
         {
             char *grm_rule;
@@ -94,7 +106,7 @@ int checkTree(grammar *G, tokenNode *tn, parseTree *parent)
             }
             // printf("\nStack top later- %s\n", peek(st));
             free(temp_stack);
-            printf("tn- %s\n", tn->token);
+            //printf("tn- %s\n", tn->token);
             int correctness_flag = 1;
             for (int i = 0; i < cnt; i++)
             {
@@ -115,7 +127,10 @@ int checkTree(grammar *G, tokenNode *tn, parseTree *parent)
                     break;
                 }
                 else{
+                  //printf("\ntn is equal to %s\n",tn->lexeme);
                     tn= tn->next;
+                    //printf("\ntn is equal to %s\n",tn->lexeme);
+
                 }
             }
             if (correctness_flag == 1)
