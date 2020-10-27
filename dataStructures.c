@@ -188,7 +188,7 @@ char * printPrimType(primitive p){
 	}
 	else if(p==Bool){
 		strcat(string,"boolean");
-	}	
+	}
 	strcat(string,">");
 	return string;
 }
@@ -271,17 +271,17 @@ primitive getType(char *s){
 	if(strcmp(s,"real")==0){
 		return Real;
 	}
-}	
+}
 void itoa(int n, char s[])
  {
      int i, sign;
- 
-     if ((sign = n) < 0)  
-         n = -n;          
+
+     if ((sign = n) < 0)
+         n = -n;
      i = 0;
-     do {     
-         s[i++] = n % 10 + '0';   
-     } while ((n /= 10) > 0);     
+     do {
+         s[i++] = n % 10 + '0';
+     } while ((n /= 10) > 0);
      if (sign < 0)
          s[i++] = '-';
      s[i] = '\0';
@@ -291,14 +291,14 @@ void itoa(int n, char s[])
  {
      int i, j;
      char c;
- 
+
      for (i = 0, j = strlen(s)-1; i<j; i++, j--) {
          c = s[i];
          s[i] = s[j];
          s[j] = c;
      }
  }
- 
+
  //HashMap
  void newHashMap(int size)
 {
@@ -306,7 +306,7 @@ void itoa(int n, char s[])
 	map=malloc(size*sizeof(mapNode *));
     for(int i = 0; i < size; i++){
 		map[i] = NULL;
-	} 
+	}
 	mapSize=size;
 }
 int hashValue(char * key){
@@ -319,7 +319,7 @@ int hashValue(char * key){
 }
 void add(char * key,int value)
 {
-	
+
     mapNode *tmp = malloc(sizeof(mapNode));
 	tmp->key=NULL;
     tmp->value = value;
@@ -354,7 +354,7 @@ void printMap()
         mapNode *temp = map[i];
         if(temp!=NULL){
 			printf("map[%d] with key %s\n",i,temp->key);
-			
+
 			while(temp)
 			{
 				printf("%d -->",temp->value);
@@ -403,43 +403,43 @@ void freeChildren(parseTree * node){
 	free(child);
 }
 // Stack
-  
-Stack* createStack(unsigned capacity) 
-{ 
-    Stack* stack = (Stack*)malloc(sizeof(struct Stack)); 
-    stack->capacity = capacity; 
-    stack->top = -1; 
-    stack->token = (char**)malloc(stack->capacity * sizeof(char *)); 
-    return stack; 
-} 
-  
-int isFull(Stack* stack) 
-{ 
-    return stack->top == stack->capacity - 1; 
-} 
-  
-int isEmpty(Stack* stack) 
-{ 
-    return stack->top == -1; 
-} 
-  
-void push(Stack* stack, char * item) 
-{ 
-    if (isFull(stack)) 
-        return; 
-    stack->token[++stack->top] = item; 
-} 
-  
-char * pop(Stack* stack) 
-{ 
-    if (isEmpty(stack)) 
-        return NULL; 
-    return stack->token[stack->top--]; 
-} 
-  
-char * peek(Stack* stack) 
-{ 
-    if (isEmpty(stack)) 
-        return NULL; 
-    return stack->token[stack->top]; 
-} 
+
+Stack* createStack(unsigned capacity)
+{
+    Stack* stack = (Stack*)malloc(sizeof(struct Stack));
+    stack->capacity = capacity;
+    stack->top = -1;
+    stack->token = (char**)malloc(stack->capacity * sizeof(char *));
+    return stack;
+}
+
+int isFull(Stack* stack)
+{
+    return stack->top == stack->capacity - 1;
+}
+
+int isEmpty(Stack* stack)
+{
+    return stack->top == -1;
+}
+
+void push(Stack* stack, char * item)
+{
+    if (isFull(stack))
+        return;
+    stack->token[++stack->top] = item;
+}
+
+char * pop(Stack* stack)
+{
+    if (isEmpty(stack))
+        return NULL;
+    return stack->token[stack->top--];
+}
+
+char * peek(Stack* stack)
+{
+    if (isEmpty(stack))
+        return NULL;
+    return stack->token[stack->top];
+}

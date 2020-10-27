@@ -38,9 +38,10 @@ int checkTree(grammar *G, tokenNode *tn, parseTree *parent)
 
     if (isTerminal(tkn))
     {
-        printf("11111\n");
-        fflush(0);
+        // printf("11111\n");
+        // fflush(0);
         pop(st);
+
         if (!strcmp(tkn, tn->token))
         {
             tn = tn->next;
@@ -60,37 +61,38 @@ int checkTree(grammar *G, tokenNode *tn, parseTree *parent)
         tokenNode *temp = tn;
         parseTree *currNode;
         push(st, "@$@$");
+
         mapNode *rules_list = search(tn->token);
 
         while (rules_list && flag)
         {
             char *grm_rule;
-            
-            
+
+
 		Node * tmp =&(G->rules[rules_list->value]);
-		printf("%d ",rules_list->value);        
-                       
+		printf("%d ",rules_list->value);
+
             // strcpy(grm_rule, (&G->rules[rules_list->value])->name);
-                        
+            //
             // char *curr_tkn = strtok(grm_rule, " \t");
             currNode = newNode(tmp->name);
             int cnt;
 
-            Stack *temp_stack = (Stack *)malloc(sizeof(Stack));
-            temp_stack->token = (char **)malloc(20 * sizeof(char *));
-            
+            Stack *temp_stack = createStack(20);
+            // temp_stack->token = (char **)malloc(20 * sizeof(char *));
+
         tmp= tmp->next;
-                        printf("%s\n", tmp->name);
-        fflush(0);      
+        //                 printf("%s\n", tmp->name);
+        // fflush(0);
         while(tmp){
             push(temp_stack, tmp->name);
             cnt++;
 			tmp=tmp->next;
-		} 
+		}
             while (!isEmpty(temp_stack))
             {
-                        printf("22222\n");
-        fflush(0);
+        //                 printf("22222\n");
+        // fflush(0);
                 push(st, pop(temp_stack));
             }
             free(temp_stack);
@@ -98,16 +100,16 @@ int checkTree(grammar *G, tokenNode *tn, parseTree *parent)
             int correctness_flag = 1;
             for (int i = 0; i < cnt; i++)
             {
-                int res = checkTree(G, tn, currNode);
+                int res = checkTree(G, tn->next, currNode);
                 if (res == -1)
                 {
                     tn = temp;
                     freeChildren(parent);
                     correctness_flag = 0;
-                    
-                printf("333333\n");
-        fflush(0);
-                    
+
+        //         printf("333333\n");
+        // fflush(0);
+
                     while (!strcmp(peek(st), "@$@$"))
                     {
                         pop(st);
@@ -119,21 +121,21 @@ int checkTree(grammar *G, tokenNode *tn, parseTree *parent)
             if (correctness_flag == 1)
             {
                 addChild(parent, currNode);
-                
-                printf("444444\n");
-        fflush(0);
-                
-                        printf("55555\n");
-        fflush(0);
+
+        //         printf("444444\n");
+        // fflush(0);
+        //
+        //                 printf("55555\n");
+        // fflush(0);
                 while (!strcmp(peek(st), "@$@$"))
                 {
                     pop(st);
                 }
-                printf("666666\n");
-        fflush(0);
+        //         printf("666666\n");
+        // fflush(0);
                 pop(st);
-                    printf("7777777\n");
-        fflush(0);
+        //             printf("7777777\n");
+        // fflush(0);
                 pop(st); // to remove the non-terminal which just completed
                 flag = 0;
             }
