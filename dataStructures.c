@@ -319,7 +319,6 @@ int hashValue(char * key){
 }
 void add(char * key,int value)
 {
-
     mapNode *tmp = malloc(sizeof(mapNode));
 	tmp->key=NULL;
     tmp->value = value;

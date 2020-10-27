@@ -51,7 +51,7 @@ void option1(){
 		ts=newTokenStream();
 	}
 	puts("\nTokenizing Source Code");
-	tokeniseSourcecode("sampleprogram.txt",ts);
+	tokeniseSourcecode("smpl.txt",ts);
 	printTokenStream(ts);
 	
 	mapNode* t=search("ALPHABET");
