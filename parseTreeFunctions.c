@@ -8,6 +8,7 @@
 
 Stack *st;
 tokenNode *tn;
+char *z0;
 
 int isTerminal(char *token)
 {
@@ -25,9 +26,13 @@ void printStack(Stack* st){
 }
 int createParseTree(parseTree *t, tokenStream *s, grammar G)
 {
+    z0= (char *)malloc(sizeof(char)*5);
+    strcpy(z0, "@$@$");
+    char * baseKwd= (char *)malloc(sizeof(char)*8);
+    strcpy(baseKwd, "PROGRAM");
     st = createStack(MAXCAPACITY);
-    t = newNode("PROGRAM");
-    push(st, "PROGRAM"); // push to stack
+    t = newNode(baseKwd);
+    push(st, baseKwd); // push to stack
     int result;
     tokenNode *head = s->head;
 
@@ -73,7 +78,7 @@ int checkTree(grammar *G, tokenNode *tn, parseTree *parent)
 
         tokenNode* temp = tn;
         parseTree *currNode;
-        push(st, "@$@$");
+        push(st, z0);
         // puts("**********************************");
         // printStack(st);
         // puts("**********************************");
