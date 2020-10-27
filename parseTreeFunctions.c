@@ -59,7 +59,7 @@ int checkTree(grammar *G, tokenNode *tn, parseTree *parent)
         }
     }
     else
-    {   
+    {
         // printf("\nStack top- %s\n", peek(st));
 
         tokenNode* temp = tn;
@@ -88,7 +88,7 @@ int checkTree(grammar *G, tokenNode *tn, parseTree *parent)
             }
             // printf("\nTemp Stack top- %s\n", peek(temp_stack));
             while (!isEmpty(temp_stack))
-            {   
+            {
                 // printf("TempStack- %s\n", peek(temp_stack));
                 push(st, pop(temp_stack));
             }
@@ -109,7 +109,9 @@ int checkTree(grammar *G, tokenNode *tn, parseTree *parent)
                     {
                         pop(st);
                     }
-                    rules_list = rules_list->next;
+                    // if(rules->next != NULL)
+                        rules_list = rules_list->next;
+                    // printf("\n%s\n",(&G->rules[rules_list->value])->name);
                     break;
                 }
                 else{
