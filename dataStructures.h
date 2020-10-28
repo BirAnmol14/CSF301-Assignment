@@ -1,6 +1,10 @@
 #define MAX_LENGTH 25
 extern int grammarSize;
 extern int typeSize;
+
+extern int decl_count;
+extern int assign_count;
+
 typedef struct node{
 	char * name;
 	struct node * next;
@@ -55,7 +59,7 @@ typedef struct type{
 	char * field1;//var name
 	category field2;
 	char * field3;//rectangular array type or not_applicable
-	typeExpression field4;	
+	typeExpression field4;
 }Type;
 typedef struct table{
 	Type ** arr;
@@ -93,11 +97,11 @@ struct parsetree * sibling;
  typeExpression type;
 }parseTree;
 
-typedef struct Stack { 
-    int top; 
-    unsigned capacity; 
-    char ** token; 
-}Stack; 
+typedef struct Stack {
+    int top;
+    unsigned capacity;
+    char ** token;
+}Stack;
 
 Stack* createStack(unsigned capacity);
 int isEmpty(Stack* stack);

@@ -57,14 +57,14 @@ void option1(){
 
 	puts("\nTokenizing Source Code");
 	tokeniseSourcecode("smpl.txt",ts);
-	// printTokenStream(ts);
-	
+	printTokenStream(ts);
+
 	parseTree * root;
 	if(createParseTree(root , ts, g))
 		printf("\nTree created\n");
 	else
 		printf("\nTree creation failed\n");
-	
+
 }
 void option2(){
 	option1();
@@ -93,7 +93,7 @@ void option2(){
 	populateRectArr(rarr,1,"25","31");
 	populateRectArr(rarr,2,"100","1011");
 	addType(tab,newType("abc6",Rectangular,"static",newRectTypeExpression(rarr)));
-	
+
 	//2D Jagged Example from sample in assignment given under type expression heading
 	JagArr* jarr=newJagArr(2,"3","8");
 	populateJagArr(jarr,0,"3",0);
@@ -103,7 +103,7 @@ void option2(){
 	populateJagArr(jarr,4,"1",0);
 	populateJagArr(jarr,5,"5",0);
 	addType(tab,newType("abc7",Jagged,NULL,newJagTypeExpression(jarr)));
-	
+
 	//3D Jagged Example from sample in assignment given under type expression heading
 	jarr=newJagArr(3,"4","7");
 	populateJagArr(jarr,0,"3",1);
@@ -126,7 +126,7 @@ void option2(){
 }
 void option3(){
 	option2();
-	puts("option 3");	
+	puts("option 3");
 }
 void option4(){
 	option3();

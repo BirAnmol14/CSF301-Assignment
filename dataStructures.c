@@ -8,6 +8,10 @@ int grammarSize=0;
 int typeSize=0;
 mapNode ** map=NULL;
 int mapSize=0;
+
+int decl_count = 0;
+int assign_count = 0;
+
 void newGrammar(char * filename,grammar *g){
 	FILE * fp=fopen(filename,"r");
 	if(fp){
@@ -92,6 +96,7 @@ void printTokenStream(tokenStream * ts){
 		printf("%s %s %d\n",tmp->lexeme,tmp->token,tmp->line);
 		tmp=tmp->next;
 	}
+	printf("\ndecl_count = %d assign_count = %d\n",decl_count,assign_count);
 }
 typeExpressionTable * newTable(){
 	typeSize=0;
@@ -439,7 +444,8 @@ void push(Stack* stack, char * item)
 {
     if (isFull(stack))
         return;
-    stack->token[++stack->top] = item;
+    stack->token[++stack->top] = (char*)malloc(sizeof(char)*(strlen(item)+1));
+		strcpy(stack->token[stack->top],item);
 }
 
 char * pop(Stack* stack)

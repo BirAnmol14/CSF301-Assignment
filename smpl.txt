@@ -1,5 +1,12 @@
 program ()
 {
-	declare v : integer ;
-	a = 2 ;
+
+declare v1 : integer ;
+declare v1 : integer ;
+declare v1 : integer ;
+declare v1 : integer ;
+declare v1 : integer ;
+
+c1 = c2 + c1 ;
+
 }

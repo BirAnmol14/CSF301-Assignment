@@ -10,6 +10,7 @@ Stack *st;
 tokenNode *tn;
 char *z0;
 FILE * f;
+tokenNode * temp;
 void printStack(Stack *st)
 {
         f= fopen("out.txt", "a");
@@ -76,12 +77,6 @@ int checkTree(grammar *G, parseTree *parent)
             parseTree *node = newNode(tn->lexeme);
             addChild(parent, node);
             tn = tn->next;
-            if (!strcmp(tn->lexeme, "a"))
-            {
-                puts("****************************************************");
-                printStack(st);
-                puts("****************************************************");
-            }
             return 1;
         }
         else
@@ -91,9 +86,10 @@ int checkTree(grammar *G, parseTree *parent)
     }
     else
     {
-        tokenNode *temp = tn;
-        parseTree *currNode;
-        push(st, z0);
+      temp = tn;
+      parseTree *currNode;
+      push(st, z0);
+
 
         mapNode *rules_list = search(tkn);
 
@@ -106,15 +102,30 @@ int checkTree(grammar *G, parseTree *parent)
 
             currNode = newNode(tmp->name);
             int cnt = 0;
-
-            Stack *temp_stack = createStack(50);
+            Stack *temp_stack = createStack(100);
 
             tmp = tmp->next;
+            int pqr = decl_count;
+            int mnq = assign_count;
             while (tmp)
-            {
+            {     if(!strcmp(tmp->name,"STMTS")){
+
+                while(pqr--){
+                  push(temp_stack,"DECLARATION");
+                  cnt++;
+                }
+                while(mnq--){
+                  push(temp_stack,"ASSIGN_STMT");
+                  cnt++;
+                }
+                tmp=tmp->next;
+              }
+
+              else{
                 push(temp_stack, tmp->name);
                 cnt++;
                 tmp = tmp->next;
+              }
             }
             while (!isEmpty(temp_stack))
             {
@@ -125,7 +136,7 @@ int checkTree(grammar *G, parseTree *parent)
             int correctness_flag = 1;
             for (int i = 0; i < cnt; i++)
             {
-
+              tokenNode* ab = tn;
                 // if (!strcmp(tn->lexeme, "}"))
                 // {
                 //     return 1;
@@ -140,19 +151,20 @@ int checkTree(grammar *G, parseTree *parent)
                         pop(st);
                         continue;
                     }
-                    // else
-                    // {
-                    //     correctness_flag= 0;
-                    //     rules_list= rules_list->next;
-                    //     while (strcmp(peek(st), "@$@$"))
-                    //     {
-                    //         pop(st);
-                    //     }
-                    //     if (!strcmp(peek(st), "@$@$"))
-                    //         pop(st);
-                    //     // pop(st);
-                    //     break;
-                    // }
+                    else
+                    { return -1;  
+                      // tn = ab;
+                      //   correctness_flag= 0;
+                      //   rules_list= rules_list->next;
+                      //   while (strcmp(peek(st), "@$@$"))
+                      //   {
+                      //       pop(st);
+                      //   }
+                      //   if (!strcmp(peek(st), "@$@$"))
+                      //       pop(st);
+                      //   // pop(st);
+                      //   break;
+                    }
                 }
 
                 if (!strcmp(peek(st), "STATIC_INT"))
@@ -164,19 +176,25 @@ int checkTree(grammar *G, parseTree *parent)
                         pop(st);
                         continue;
                     }
-                    // else
-                    // {
-                    //     rules_list= rules_list->next;
-                    //     correctness_flag= 0;
-                    //     while (strcmp(peek(st), "@$@$"))
-                    //     {
-                    //         pop(st);
-                    //     }
-                    //     if (!strcmp(peek(st), "@$@$"))
-                    //         pop(st);
-                    //     pop(st);
-                    //     break;
-                    // }
+                    else
+                    { return -1;
+                      // tn = ab;
+                      //   rules_list= rules_list->next;
+                      //   correctness_flag= 0;
+                      //   while (strcmp(peek(st), "@$@$"))
+                      //   {
+                      //       pop(st);
+                      //   }
+                      //   if (!strcmp(peek(st), "@$@$"))
+                      //       pop(st);
+                      //   pop(st);
+                      //   break;
+                    }
+                }
+
+                if (!strcmp(tn->lexeme, "}"))
+                {
+                    return 1;
                 }
 
                 int res = checkTree(G, currNode);

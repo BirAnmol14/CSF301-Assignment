@@ -3,11 +3,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+
+
 void readGrammar(char * filename,grammar * g){
 	newGrammar(filename,g);
 	puts("Reading Grammar");
 	FILE * fp= fopen(filename, "r");
-	
+
 	if(fp){
 		char * temp =(char *)malloc(sizeof(char)*500);
 		int line=0;
@@ -31,7 +33,7 @@ void readGrammar(char * filename,grammar * g){
 		}
 		free(temp);
 		mapToLL();
-	
+
 		fclose(fp);
 	}else{
 		puts("No Such File Exists");
@@ -42,17 +44,24 @@ void tokeniseSourcecode(char * filename,tokenStream * ts){
 	if(fp){
 		char line [500];
 		int line_count=0;
+		int line_2 =0;
 		while(fscanf(fp,"%[^\n]\n",line)!=EOF){
 			line_count++;
 			printf("%d\t%s\n",line_count,line);
 			char line1[500];
 			strcpy(line1,line);
+			if(strlen(line1)!=0)
+			line_2++;
 			char * tk=strtok(line1," \t");
-			while(tk){				
-				ts=addTokenNode(ts,tk,getToken(tk),line_count);
-				tk=strtok(NULL," \t");				
+			while(tk){
+				char* tmp = getToken(tk);
+				if(!strcmp(tmp,"DECLARE_KWD")||!strcmp(tmp,"ROW_INIT"))
+				decl_count++;
+				ts=addTokenNode(ts,tk,tmp,line_count);
+				tk=strtok(NULL," \t");
 			}
 		}
+		assign_count= line_2 -3 -decl_count;
 		fclose(fp);
 	}else{
 		puts("No such File Exists");
@@ -91,7 +100,7 @@ int isValidVarId(char * var){
 	}
 	return valid;
 }
-char * getToken(char * lexeme){	
+char * getToken(char * lexeme){
 	if(strcmp(lexeme,"declare")==0){return "DECLARE_KWD";}
 	if(strcmp(lexeme,"program")==0){return "PROGRAM_KWD";}
 	if(strcmp(lexeme,"boolean")==0){return "TYPE_KWD";}
