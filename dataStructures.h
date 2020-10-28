@@ -89,7 +89,7 @@ typedef struct mapNode
 typedef struct parsetree{
  char* token;
  struct parsetree * child;
-struct parsetree * sibling;
+ struct parsetree * sibling;
  typeExpression type;
 }parseTree;
 

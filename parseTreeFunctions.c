@@ -153,3 +153,24 @@ int checkTree(grammar *G, tokenNode *tn, parseTree *parent)
     else
         return -1;
 }
+
+void traverseParseTree(parseTree * root, typeExpressionTable* te){
+    parseTree* stmts=root->child;
+    stmts=stmts->sibling->sibling->sibling; //start of statements
+    parseTree* declist=stmts->child;
+    parseTree* asslist=declist->sibling;
+    puts("Traversing declaration tree...\n");
+    traverseDeclarationTree(declist, te);
+    puts("Traversing assignment tree...\n");
+    traverseAssignmentTree(asslist, te);
+}
+
+void traverseDeclarationTree(parseTree * root, typeExpressionTable * te){
+    parseTree* curDec=root->child;
+    parseTree* declist=root->child->sibling;
+
+}
+
+void traverseAssignmentTree(parseTree * root, typeExpressionTable * te){
+
+}

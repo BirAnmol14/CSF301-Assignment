@@ -84,6 +84,10 @@ int isValidVarId(char * var){
 	int valid=1;
 	for(int i=0;i<strlen(var);i++){
 		if(isalpha(var[i])||isdigit(var[i])||var[i]=='_'){
+			if(i==0 && isdigit(var[i])){
+				valid=0;
+				break;
+			}
 			continue;
 		}
 		valid=0;break;
