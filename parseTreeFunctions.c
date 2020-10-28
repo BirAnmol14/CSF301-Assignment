@@ -155,22 +155,348 @@ int checkTree(grammar *G, tokenNode *tn, parseTree *parent)
 }
 
 void traverseParseTree(parseTree * root, typeExpressionTable* te){
-    parseTree* stmts=root->child;
+    treeNode* stmts=root->start;
     stmts=stmts->sibling->sibling->sibling; //start of statements
-    parseTree* declist=stmts->child;
-    parseTree* asslist=declist->sibling;
+    treeNode* declist=stmts->child;
+    treeNode* asslist=declist->sibling;
     puts("Traversing declaration tree...\n");
     traverseDeclarationTree(declist, te);
     puts("Traversing assignment tree...\n");
     traverseAssignmentTree(asslist, te);
 }
 
-void traverseDeclarationTree(parseTree * root, typeExpressionTable * te){
-    parseTree* curDec=root->child;
-    parseTree* declist=root->child->sibling;
+void traverseDeclarationTree(treeNode * root, typeExpressionTable * te){
+    treeNode* curDec=root->child->child;
+    treeNode* declist=root->child->sibling;
+    if(!strcmp(curDec->token,"PRIMITIVEDECLARATION")){  //if primitive declaration...(no possible errors in primitives)
+        curDec=curDec->child;
+        if(!strcmp(curDec->token,"SINGLEPRIMITIVE")){   //if single primitive...
+            char* idvalue=curDec->child->sibling->child->token;
+            char* datatype=curDec->child->sibling->sibling->sibling->child->token;
+            curDec->child->sibling->hasType=1;
+            curDec->child->sibling->v.type=newType(idvalue,Primitive,NULL,newPrimTypeExpression(getType(datatype)));
+            addType(te,newType(idvalue,Primitive,NULL,newPrimTypeExpression(getType(datatype))));
+        }
+        else{   //if list of primitives...
+            treeNode * idlist=curDec->child->sibling->sibling->sibling->sibling;
+            char * datatype=idlist->sibling->sibling->child->token;
+            char * idvalue=idlist->child->child->token;
+            //absorbing first id to enter recursive loop of id sublist
+            idlist->child->v.type=newType(idvalue,Primitive,NULL,newPrimTypeExpression(getType(datatype)));
+            idlist->child->hasType=1;
+            addType(te,newType(idvalue,Primitive,NULL,newPrimTypeExpression(getType(datatype))));
+            idlist=idlist->child->sibling;
+            while(1){
+                idvalue=idlist->child->token;
+                idlist->v.type=newType(idvalue,Primitive,NULL,newPrimTypeExpression(getType(datatype)));
+                idlist->hasType=1;
+                addType(te,newType(idvalue,Primitive,NULL,newPrimTypeExpression(getType(datatype))));
+                if(idlist->sibling){
+                    idlist=idlist->sibling->child;
+                }
+                else{
+                    break;
+                }
+            }
+        }
+    }
+    else if(!strcmp(curDec->token,"ARRAYDECLARATION")){ //if array declaration...(no poossible errors in arrays)
+        //char * datatype="integer";
+        if(!strcmp(curDec->child->sibling,"ID")){   //if single array...
+            char * idvalue=curDec->child->sibling->child->token;
+            treeNode* dimlist=curDec->child->sibling->sibling->sibling->sibling;
+            int dimCount=0;
+            int dynamic=0;
+            arrRange* listofranges=(arrRange*) malloc(3*sizeof(arrRange));
+            while(1){
+                if(dimlist){
+                    dimCount++;
+                    dimlist=dimlist->child;
+                    if((!strcmp(dimlist->child->sibling->child->token,"ID"))||(!strcmp(dimlist->child->sibling->sibling->sibling->child->token,"ID"))){   //if array is dynamically bounded...
+                        dynamic=1;
+                    }
+                    char * lo=dimlist->child->sibling->child->child->token;
+                    char * hi=dimlist->child->sibling->sibling->sibling->child->child->token;
+                    arrRange[dimCount-1].low=lo;
+                    arrRange[dimCount-1].high=hi;
+                    dimlist=dimlist->sibling;
+                }
+                else{
+                    break;
+                }
+            }
+            curDec->child->sibling->hasType=1;
+            RectArr* rarr=newRectArr(dimCount);
+            for(int i=0; i<dimCount;i++){
+                populateRectArr(rarr,i,listofranges[i].low,listofranges[i].high);
+            }
+            free(listofranges);
+            if(dynamic){
+                curDec->child->sibling->v.type=newType(idvalue,Rectangular,"dynamic",newRectTypeExpression(rarr));
+                addType(te,newType(idvalue,Rectangular,"dynamic",newRectTypeExpression(rarr));
+            }
+            else{
+                curDec->child->sibling->v.type=newType(idvalue,Rectangular,"static",newRectTypeExpression(rarr));
+                addType(te,newType(idvalue,Rectangular,"static",newRectTypeExpression(rarr));
+            } 
+            
+        }
+        else{   //if multiple arrays...
+            treeNode * idlist=curDec->child->sibling->sibling->sibling->sibling;
+            treeNode* dimlist=curDec->child->sibling->sibling->sibling->sibling->sibling->sibling->sibling;
+            int dimCount=0;
+            int dynamic=0;
+            arrRange* listofranges=(arrRange*) malloc(3*sizeof(arrRange));
+            while(1){
+                if(dimlist){
+                    dimCount++;
+                    dimlist=dimlist->child;
+                    if((!strcmp(dimlist->child->sibling->child->token,"ID"))||(!strcmp(dimlist->child->sibling->sibling->sibling->child->token,"ID"))){   //if array is dynamically bounded...
+                        dynamic=1;
+                    }
+                    char * lo=dimlist->child->sibling->child->child->token;
+                    char * hi=dimlist->child->sibling->sibling->sibling->child->child->token;
+                    arrRange[dimCount-1].low=lo;
+                    arrRange[dimCount-1].high=hi;
+                    dimlist=dimlist->sibling;
+                }
+                else{
+                    break;
+                }
+            }
+            char * idvalue=idlist->child->child->token;
+            RectArr* rarr=newRectArr(dimCount);
+            for(int i=0; i<dimCount;i++){
+                populateRectArr(rarr,i,listofranges[i].low,listofranges[i].high);
+            }
+            free(listofranges);
 
+            idlist->child->hasType=1;
+            //absorbing first id to enter recursive loop of id sublist
+            if(dynamic){
+                idlist->child->v.type=newType(idvalue,Rectangular,"dynamic",newRectTypeExpression(rarr)));
+                addType(te,newType(idvalue,Rectangular,"dynamic",newRectTypeExpression(rarr)));
+            }
+            else{
+                idlist->child->v.type=newType(idvalue,Rectangular,"static",newRectTypeExpression(rarr));
+                addType(te,newType(idvalue,Rectangular,"static",newRectTypeExpression(rarr));
+            }
+            
+            idlist=idlist->child->sibling;
+            while(1){
+                idvalue=idlist->child->token;
+                idlist->v.type=newType(idvalue,Rectangular,dynamic ? "dynamic" :"static",newRectTypeExpression(rarr));
+                idlist->hasType=1;
+                addType(te,newType(idvalue,Rectangular,dynamic ? "dynamic" : "static",newRectTypeExpression(rarr)));
+                if(idlist->sibling){
+                    idlist=idlist->sibling->child;
+                }
+                else{
+                    break;
+                }
+            }
+        }
+
+    }
+    else{   //if jagged array...(errors possible here!)(not being handled as of now)
+        if(!strcmp(curDec->child->child->token,"JAGGEDSINGLE2D")){  //if one 2D jagged array...
+            treeNode * jarrdec=curDec->child->child->child;
+            char * idvalue=jarrdec->sibling->child->token;
+            char * lo=jarrdec->sibling->sibling->sibling->sibling->sibling->sibling->child->token;
+            char * hi=jarrdec->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling->child->token;
+            JagArr* jarr=newJagArr(2,lo,hi);
+            treeNode* rows=curDec->child->sibling->child;   //onerow token
+            for(int i=0; ;i++){
+                if(atoi(rows->child->sibling->sibling)>atoi(hi)-atoi(lo)){
+                    puts("Error to be reported for dim(0) out of bounds in jarr.\n");
+                }else{
+                char * size=rows->child->sibling->sibling->sibling->sibling->sibling->sibling->child->token;
+                treeNode* rowvals=rows->child->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling;
+                populateJagArr(jarr,i,size,0);
+                }
+                for(int j=0;j<atoi(size);j++){  //error checking for dim(1)(incomplete)
+                    if(rowvals->child->child->sibling){
+                        puts("Error to be reported for 3D rowvals in 2D jagged array.\n");
+                    }
+
+                    if(rowvals->child->sibling->sibling){
+                        rowvals=rowvals->child->sibling->sibling;
+                    }
+                    else{
+                        puts("Error to be reported for lesser than mentioned in dim(1) for 2D jarr,\n");
+                        break;
+                    }
+                }
+                if(rows->sibling){
+                    rows=rows->sibling->child;
+                }
+                else break;
+            }
+            addType(te, newType(idvalue,Jagged,NULL,newJagTypeExpression(jarr)));
+            jarrdec->sibling->v.type=newType(idvalue,Jagged,NULL,newJagTypeExpression(jarr));
+            jarrdec->sibling->hasType=1;
+
+        }
+        else if(!strcmp(curDec->child->child->token,"JAGGEDSINGLE3D")){ //jagged 3d array...
+            treeNode * jarrdec=curDec->child->child->child;
+            int subsize=0;
+            char * idvalue=jarrdec->sibling->child->token;
+            char * lo=jarrdec->sibling->sibling->sibling->sibling->sibling->sibling->child->token;
+            char * hi=jarrdec->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling->child->token;
+            JagArr* jarr=newJagArr(3,lo,hi);
+            treeNode* rows=curDec->child->sibling->child;   //onerow token
+            treeNode* rowvals;
+            treeNode* digitlist;
+            for(int i=0; ;i++){
+                if(atoi(rows->child->sibling->sibling)>atoi(hi)-atoi(lo)){
+                    puts("Error to be reported for dim(0) out of bounds in jarr.\n");
+                }else{
+                char * size=rows->child->sibling->sibling->sibling->sibling->sibling->sibling->child->token;
+                rowvals=rows->child->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling;
+                populateJagArr(jarr,i,size,1);
+                }
+                for(int j=0;j<atoi(size);j++){
+
+                    digitlist=rowvals->child;
+                    while(strcmp(digitlist->child->token,"EPSILON")){   //traverse subrange for subsize
+                        subsize++;
+                        digitlist=digitlist->child->sibling;
+                    }
+                    populateJagArrSubrange(jarr,i,j,itoa(subsize));
+
+                    if(rowvals->child->sibling->sibling){
+                        rowvals=rowvals->child->sibling->sibling;
+                    }
+                    else{
+                        puts("Error to be reported for lesser than mentioned in dim(1) for 3D jarr,\n");
+                        break;
+                    }
+                }
+                if(rows->sibling){
+                    rows=rows->sibling->child;
+                }
+                else break;
+            }
+            addType(te, newType(idvalue,Jagged,NULL,newJagTypeExpression(jarr)));
+            jarrdec->sibling->v.type=newType(idvalue,Jagged,NULL,newJagTypeExpression(jarr));
+            jarrdec->sibling->hasType=1;
+        }
+        else if(!(strcmp(curDec->child->child->token,"JAGGED2D"))){
+            treeNode * jarrdec=curDec->child->child->child;
+            treeNode * idlist=jarrdec->sibling->sibling->sibling->sibling;
+            char * lo=jarrdec->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling->child->token;
+            char * hi=jarrdec->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling->child->token;
+            JagArr* jarr=newJagArr(2,lo,hi);
+            treeNode* rows=curDec->child->sibling->child;   //onerow token
+            for(int i=0; ;i++){
+                if(atoi(rows->child->sibling->sibling)>atoi(hi)-atoi(lo)){
+                    puts("Error to be reported for dim(0) out of bounds in jarr.\n");
+                }else{
+                char * size=rows->child->sibling->sibling->sibling->sibling->sibling->sibling->child->token;
+                treeNode* rowvals=rows->child->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling;
+                populateJagArr(jarr,i,size,0);
+                }
+                for(int j=0;j<atoi(size);j++){  //error checking for dim(1)(incomplete)
+                    if(rowvals->child->child->sibling){
+                        puts("Error to be reported for 3D rowvals in 2D jagged array.\n");
+                    }
+
+                    if(rowvals->child->sibling->sibling){
+                        rowvals=rowvals->child->sibling->sibling;
+                    }
+                    else{
+                        puts("Error to be reported for lesser than mentioned in dim(1) for 2D jarr,\n");
+                        break;
+                    }
+                }
+                if(rows->sibling){
+                    rows=rows->sibling->child;
+                }
+                else break;
+            }
+            char * idvalue=idlist->child->child->token;
+            //absorbing first id to enter recursive loop of id sublist
+            idlist->child->v.type=newType(idvalue,Jagged,NULL,newJagTypeExpression(jarr));
+            idlist->child->hasType=1;
+            addType(te,newType(idvalue,Jagged,NULL,newJagTypeExpression(jarr)));
+            idlist=idlist->child->sibling;
+            while(1){
+                idvalue=idlist->child->token;
+                idlist->v.type=newType(idvalue,Jagged,NULL,newJagTypeExpression(jarr));
+                idlist->hasType=1;
+                addType(te,newType(idvalue,Jagged,NULL,newJagTypeExpression(jarr)));
+                if(idlist->sibling){
+                    idlist=idlist->sibling->child;
+                }
+                else{
+                    break;
+                }
+            }
+        }
+        else if(!(strcmp(curDec->child->child->token,"JAGGED3D"))){
+            treeNode * jarrdec=curDec->child->child->child;
+            int subsize=0;
+            treeNode * idlist=jarrdec->sibling->sibling->sibling->sibling;
+            char * lo=jarrdec->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling->child->token;
+            char * hi=jarrdec->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling->child->token;
+            JagArr* jarr=newJagArr(3,lo,hi);
+            treeNode* rows=curDec->child->sibling->child;   //onerow token
+            treeNode* rowvals;
+            treeNode* digitlist;
+            for(int i=0; ;i++){
+                if(atoi(rows->child->sibling->sibling)>atoi(hi)-atoi(lo)){
+                    puts("Error to be reported for dim(0) out of bounds in jarr.\n");
+                }else{
+                char * size=rows->child->sibling->sibling->sibling->sibling->sibling->sibling->child->token;
+                rowvals=rows->child->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling->sibling;
+                populateJagArr(jarr,i,size,1);
+                }
+                for(int j=0;j<atoi(size);j++){
+
+                    digitlist=rowvals->child;
+                    while(strcmp(digitlist->child->token,"EPSILON")){   //traverse subrange for subsize
+                        subsize++;
+                        digitlist=digitlist->child->sibling;
+                    }
+                    populateJagArrSubrange(jarr,i,j,itoa(subsize));
+
+                    if(rowvals->child->sibling->sibling){
+                        rowvals=rowvals->child->sibling->sibling;
+                    }
+                    else{
+                        puts("Error to be reported for lesser than mentioned in dim(1) for 3D jarr,\n");
+                        break;
+                    }
+                }
+                if(rows->sibling){
+                    rows=rows->sibling->child;
+                }
+                else break;
+            }
+            char * idvalue=idlist->child->child->token;
+            //absorbing first id to enter recursive loop of id sublist
+            idlist->child->v.type=newType(idvalue,Jagged,NULL,newJagTypeExpression(jarr));
+            idlist->child->hasType=1;
+            addType(te,newType(idvalue,Jagged,NULL,newJagTypeExpression(jarr)));
+            idlist=idlist->child->sibling;
+            while(1){
+                idvalue=idlist->child->token;
+                idlist->v.type=newType(idvalue,Jagged,NULL,newJagTypeExpression(jarr));
+                idlist->hasType=1;
+                addType(te,newType(idvalue,Jagged,NULL,newJagTypeExpression(jarr)));
+                if(idlist->sibling){
+                    idlist=idlist->sibling->child;
+                }
+                else{
+                    break;
+                }
+            }
+        }
+    }
+    traverseDeclarationTree(declist,te);
+    return;
 }
 
-void traverseAssignmentTree(parseTree * root, typeExpressionTable * te){
+void traverseAssignmentTree(treeNode * root, typeExpressionTable * te){
 
 }
