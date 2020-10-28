@@ -30,11 +30,12 @@ void readGrammar(char * filename,grammar * g){
 			line++;
 		}
 		free(temp);
-	
+		mapToLL();
 		fclose(fp);
 	}else{
 		puts("No Such File Exists");
 	}
+	
 }
 void tokeniseSourcecode(char * filename,tokenStream * ts){
 	FILE * fp=fopen(filename,"r");
@@ -56,6 +57,76 @@ void tokeniseSourcecode(char * filename,tokenStream * ts){
 	}else{
 		puts("No such File Exists");
 	}
+}
+void createParseTree(parseTree * pt, tokenStream * ts, grammar g){
+	newStack();
+	push("PROGRAM",0);
+	pt->start=newTreeNode(0,"PROGRAM",0);
+	tokenNode * lookup=ts->head;
+	expandChild(pt->start,lookup,g);
+}
+int expandChild(treeNode * tn,tokenNode * lookup,grammar g){
+	char * top=pop(0);
+	printf("Searching: %s Level: %d Stack Top: %s\n",lookup->lexeme,tn->level,top);
+	if(top){
+		if(isNonTerminal(top)){
+			mapNode * possibleRules = search(top);
+			while(possibleRules){
+				Node * rule=&(g.rules[possibleRules->value]);
+				int i=0;
+				if(strcmp(rule->name,top)==0){
+					if(isValidVarId(lookup->lexeme) && strcmp(lookup->token,top)==0){
+						addChild(tn,newTreeNode(tn->level+1,lookup->lexeme,0));
+						return 1;
+					}
+					if(strcmp("ID",top)!=0){
+							rule=rule->next;
+						while(rule){
+							push(rule->name,1);
+							addChild(tn,newTreeNode(tn->level+1,rule->name,0));
+							i++;
+							rule=rule->next;
+						}
+						while(i>0){
+							push(pop(1),0);
+							i--;
+						}
+						if(expandSibling(tn->child,lookup,g)){
+							return 1;
+						}else{
+							deleteChild(tn);
+						}
+					}
+					
+				}
+				possibleRules=possibleRules->next;
+			}
+		}else{
+			if(strcmp(top,lookup->lexeme)==0){
+				return 1;
+			}else{
+				return 0;
+			}
+		}
+	}else{
+		puts("Stack Empty");
+		return 1;
+	}
+}
+int expandSibling(treeNode * tn,tokenNode * lookup,grammar g){
+		int i=0;
+		treeNode * t=tn;
+		while(t){
+			i=expandChild(t,lookup,g);
+			if(i){
+				t=t->sibling;
+				lookup=lookup->next;
+			}
+			else{
+				return 0;
+			}
+		}
+		return i;
 }
 void printTypeExpressionTable(typeExpressionTable* t){
 	for(int i=0;i<typeSize;i++){

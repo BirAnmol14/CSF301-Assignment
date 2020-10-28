@@ -89,3 +89,41 @@ int hashValue(char * key);
 void add(char * key,int value);
 mapNode * search(char * key);
 void printMap();
+void mapToLL();
+typedef struct ntNode{
+	char * val;
+	struct ntNode * next;
+}ntNode;
+typedef struct allNonTerminals{
+	ntNode * head;
+	ntNode * tail;
+}allNonTerminals;
+void addNonTerminals(char *);
+int isNonTerminal(char *);
+typedef union variant{Type * type;char * other;}variant; 
+typedef struct treeNode{
+	int level;
+	char * token;
+	struct treeNode * child;
+	struct treeNode * sibling;
+	int hasType;
+	variant v;
+}treeNode;
+typedef struct paseTree{
+	treeNode * start;
+}parseTree;
+parseTree * newTree();
+treeNode * newTreeNode(int,char *,int);
+void addSibling(treeNode *,treeNode *);
+void addChild(treeNode *,treeNode *);
+void deleteChild(treeNode *);
+typedef struct stack{
+	char ** symbol;
+	int top;
+	int size;
+}Stack;
+void newStack();
+void push(char *,int);
+char * pop(int);
+int isEmpty(int);
+int isFull(int);

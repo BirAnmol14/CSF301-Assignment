@@ -4,6 +4,7 @@
 #include "functions.h"
 grammar g;
 tokenStream * ts=NULL;
+parseTree * pt=NULL;
 typeExpressionTable * tab=NULL;
 void printOptions();
 void testOption(int);
@@ -51,33 +52,9 @@ void option1(){
 	}
 	puts("\nTokenizing Source Code");
 	tokeniseSourcecode("sampleprogram.txt",ts);
-	printTokenStream(ts);
-	
-	mapNode* t=search("ALPHABET");
-	if(t){
-		printf("Key: %s\n",t->key);
-		printf("Indices in Grammar ds: line number grammar.txt-1\n");
-		while(t){
-			printf("%d ",t->value);
-			t=t->next;
-		}
-		printf("NULL\n");
-	}else{
-		printf("Not Present");
-	}
-	
-	t=search("A+=fLPHABET");
-	if(t){
-		printf("Key: %s\n",t->key);
-		printf("Indices in Grammar ds: line number grammar.txt-1\n");
-		while(t){
-			printf("%d ",t->value);
-			t=t->next;
-		}
-		printf("NULL\n");
-	}else{
-		printf("Not Present");
-	}
+	printTokenStream(ts);	
+	pt=newTree();
+	createParseTree(pt,ts,g);
 }
 void option2(){
 	option1();
