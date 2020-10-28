@@ -53,7 +53,6 @@ void option1(){
 	}
 	puts("\nTokenizing Source Code");
 	tokeniseSourcecode("sampleprogram.txt",ts);
-<<<<<<< HEAD
 	printTokenStream(ts);
 	
 	mapNode* t=search("ALPHABET");
@@ -88,18 +87,17 @@ void option1(){
 		printf("\nTree creation failed\n");
 
 	
-=======
 	printTokenStream(ts);	
 	pt=newTree();
 	createParseTree(pt,ts,g);
->>>>>>> 88d4db4f966d4252905404d020dc3a1d55a54316
 }
 void option2(){
 	option1();
 	puts("option 2");
 	puts("Creating Type Expression Table");
 	tab=newTable();
-
+	/*
+	//Below are the exhaustive ways to add a row to the typeExpressionTable.
 	//Populating Primitive variables
 	addType(tab,newType("abc",Primitive,NULL,newPrimTypeExpression(getType("integer"))));
 	addType(tab,newType("abc1",Primitive,NULL,newPrimTypeExpression(getType("real"))));
@@ -151,6 +149,7 @@ void option2(){
 	populateJagArrSubrange(jarr,3,2,"4");
 	populateJagArrSubrange(jarr,3,3,"4");
 	addType(tab,newType("abc8",Jagged,NULL,newJagTypeExpression(jarr)));
+	*/
 }
 void option3(){
 	option2();

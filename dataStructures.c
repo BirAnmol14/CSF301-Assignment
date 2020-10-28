@@ -265,6 +265,9 @@ char * printJagArr(JagArr * jarr){
 	return string;
 }
 primitive getType(char *s){
+	if(strcmp(s,"INTEGR_KWD")==0){
+		return Int;
+	}
 	if(strcmp(s,"integer")==0){
 		return Int;
 	}
@@ -367,7 +370,6 @@ void printMap()
 		}
     }
 }
-<<<<<<< HEAD
 
 // Parse Tree DS
 parseTree * newNode(char * tkn){
@@ -447,7 +449,6 @@ char * peek(Stack* stack)
         return NULL;
     return stack->token[stack->top];
 }
-=======
 void mapToLL(){
 	if(map!=NULL){
 		 for(int i = 0; i < mapSize; i++)
@@ -594,4 +595,3 @@ int isFull(int i){
 		return 0;
 	}
 }
->>>>>>> 88d4db4f966d4252905404d020dc3a1d55a54316

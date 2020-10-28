@@ -86,13 +86,14 @@ typedef struct mapNode
 } mapNode;
 
 // Parse Tree
+/*
 typedef struct parsetree{
  char* token;
  struct parsetree * child;
  struct parsetree * sibling;
  typeExpression type;
 }parseTree;
-
+*/
 typedef struct Stack { 
     int top; 
     unsigned capacity; 
