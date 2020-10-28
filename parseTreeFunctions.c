@@ -140,19 +140,19 @@ int checkTree(grammar *G, parseTree *parent)
                         pop(st);
                         continue;
                     }
-                    else
-                    {
-                        correctness_flag= 0;
-                        rules_list= rules_list->next;
-                        while (strcmp(peek(st), "@$@$"))
-                        {
-                            pop(st);
-                        }
-                        if (!strcmp(peek(st), "@$@$"))
-                            pop(st);
-                        // pop(st);
-                        break;
-                    }
+                    // else
+                    // {
+                    //     correctness_flag= 0;
+                    //     rules_list= rules_list->next;
+                    //     while (strcmp(peek(st), "@$@$"))
+                    //     {
+                    //         pop(st);
+                    //     }
+                    //     if (!strcmp(peek(st), "@$@$"))
+                    //         pop(st);
+                    //     // pop(st);
+                    //     break;
+                    // }
                 }
 
                 if (!strcmp(peek(st), "STATIC_INT"))
@@ -164,19 +164,19 @@ int checkTree(grammar *G, parseTree *parent)
                         pop(st);
                         continue;
                     }
-                    else
-                    {
-                        rules_list= rules_list->next;
-                        correctness_flag= 0;
-                        while (strcmp(peek(st), "@$@$"))
-                        {
-                            pop(st);
-                        }
-                        if (!strcmp(peek(st), "@$@$"))
-                            pop(st);
-                        pop(st);
-                        break;
-                    }
+                    // else
+                    // {
+                    //     rules_list= rules_list->next;
+                    //     correctness_flag= 0;
+                    //     while (strcmp(peek(st), "@$@$"))
+                    //     {
+                    //         pop(st);
+                    //     }
+                    //     if (!strcmp(peek(st), "@$@$"))
+                    //         pop(st);
+                    //     pop(st);
+                    //     break;
+                    // }
                 }
 
                 int res = checkTree(G, currNode);

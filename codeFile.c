@@ -56,7 +56,7 @@ void option1(){
 		printf("SUCCESS\n");
 
 	puts("\nTokenizing Source Code");
-	tokeniseSourcecode("sampleprogram.txt",ts);
+	tokeniseSourcecode("smpl.txt",ts);
 	// printTokenStream(ts);
 	
 	parseTree * root;

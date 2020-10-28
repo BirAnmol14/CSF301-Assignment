@@ -387,6 +387,7 @@ parseTree * addChild(parseTree * parent, parseTree * child){
 	// 	child->sibling= NULL;
 	// }
 	// return parent;
+	return NULL;
 }
 
 void freeChildren(parseTree * node){
