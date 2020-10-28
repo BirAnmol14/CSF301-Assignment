@@ -10,7 +10,6 @@ Stack *st;
 tokenNode *tn;
 char *z0;
 FILE * f;
-tokenNode * temp;
 void printStack(Stack *st)
 {
         f= fopen("out.txt", "a");
@@ -28,7 +27,7 @@ int isTerminal(char *token)
     f= fopen("out.txt", "a");
     fprintf(f, "#############################################\n");
     // puts("#############################################");
-    fprintf(f, "Lexeme- %s and token- %s\n", tn->lexeme, token);
+    fprintf(f, "Lexeme- %s and token- %s Next lexeme- %s\n", tn->lexeme, token, tn->next->lexeme);
     fclose(f);
     printStack(st);
     // puts("#############################################");
@@ -86,7 +85,7 @@ int checkTree(grammar *G, parseTree *parent)
     }
     else
     {
-      temp = tn;
+      tokenNode *temp = tn;
       parseTree *currNode;
       push(st, z0);
 
@@ -95,7 +94,6 @@ int checkTree(grammar *G, parseTree *parent)
 
         while (rules_list && flag)
         {
-
             char *grm_rule;
 
             Node *tmp = &(G->rules[rules_list->value]);
@@ -104,7 +102,18 @@ int checkTree(grammar *G, parseTree *parent)
             int cnt = 0;
             Stack *temp_stack = createStack(100);
 
+            // if(!strcmp(tmp->name, "declare")){
+            //     Node * temp_tmp= tmp->next->next;
+            //     if(strcmp(tn->next->lexeme, "list") || strcmp(tmp->name, "list")){
+            //         printf("\nInside condn\n");
+            //         rules_list= rules_list->next;
+            //         continue;                   
+            //     }
+            // }
+
             tmp = tmp->next;
+
+
             int pqr = decl_count;
             int mnq = assign_count;
             while (tmp)
@@ -210,11 +219,13 @@ int checkTree(grammar *G, parseTree *parent)
                         pop(st);
                     }
                     // pop(st);
+                    // pop(st);
 
                     rules_list = rules_list->next;
 
                     if (!rules_list)
                     {
+                        tn= temp;
                         while (strcmp(peek(st), "@$@$"))
                         {
                             pop(st);

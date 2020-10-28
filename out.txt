@@ -1,381 +1,282 @@
 #############################################
-Lexeme- program and token- PROGRAM
+Lexeme- program and token- PROGRAM Next lexeme- ()
 #############################################
 #############################################
-Lexeme- program and token- PROGRAM_KWD
+Lexeme- program and token- PROGRAM_KWD Next lexeme- ()
 Element ()
 Element {
 Element DECLARATIONS
-Element DECLARATIONS
-Element DECLARATIONS
 Element ASSIGNMENT
 Element }
 Element @$@$
-Element PROGRAM
 #############################################
 #############################################
-Lexeme- program and token- program
+Lexeme- program and token- program Next lexeme- ()
 Element @$@$
-Element PROGRAM_KWD
 Element ()
 Element {
 Element DECLARATIONS
-Element DECLARATIONS
-Element DECLARATIONS
 Element ASSIGNMENT
 Element }
 Element @$@$
-Element PROGRAM
 #############################################
 #############################################
-Lexeme- () and token- ()
+Lexeme- () and token- () Next lexeme- {
 Element {
 Element DECLARATIONS
-Element DECLARATIONS
+Element ASSIGNMENT
+Element }
+Element @$@$
+#############################################
+#############################################
+Lexeme- { and token- { Next lexeme- declare
 Element DECLARATIONS
 Element ASSIGNMENT
 Element }
 Element @$@$
-Element PROGRAM
 #############################################
 #############################################
-Lexeme- { and token- {
-Element DECLARATIONS
-Element DECLARATIONS
-Element DECLARATIONS
+Lexeme- declare and token- DECLARATIONS Next lexeme- v1
 Element ASSIGNMENT
 Element }
 Element @$@$
-Element PROGRAM
 #############################################
 #############################################
-Lexeme- declare and token- DECLARATIONS
-Element DECLARATIONS
-Element DECLARATIONS
+Lexeme- declare and token- PRIMITIVEDECLARATION Next lexeme- v1
+Element @$@$
 Element ASSIGNMENT
 Element }
 Element @$@$
-Element PROGRAM
 #############################################
 #############################################
-Lexeme- declare and token- PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATIONS
-Element DECLARATIONS
-Element DECLARATIONS
-Element ASSIGNMENT
-Element }
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- declare
+Lexeme- declare and token- declare Next lexeme- v1
 Element ID
 Element :
 Element integer
 Element ;
 Element @$@$
-Element PRIMITIVEDECLARATION
 Element @$@$
-Element DECLARATIONS
-Element DECLARATIONS
-Element DECLARATIONS
 Element ASSIGNMENT
 Element }
 Element @$@$
-Element PROGRAM
 #############################################
 #############################################
-Lexeme- : and token- :
-Element integer
-Element ;
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATIONS
-Element DECLARATIONS
-Element DECLARATIONS
-Element ASSIGNMENT
-Element }
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- integer and token- integer
-Element ;
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATIONS
-Element DECLARATIONS
-Element DECLARATIONS
-Element ASSIGNMENT
-Element }
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- ; and token- ;
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATIONS
-Element DECLARATIONS
-Element DECLARATIONS
-Element ASSIGNMENT
-Element }
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- DECLARATIONS
-Element DECLARATIONS
-Element ASSIGNMENT
-Element }
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATIONS
-Element DECLARATIONS
-Element ASSIGNMENT
-Element }
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- declare
-Element ID
+Lexeme- v1 and token- ID Next lexeme- :
 Element :
 Element integer
 Element ;
 Element @$@$
-Element PRIMITIVEDECLARATION
 Element @$@$
-Element DECLARATIONS
-Element DECLARATIONS
 Element ASSIGNMENT
 Element }
 Element @$@$
-Element PROGRAM
 #############################################
 #############################################
-Lexeme- : and token- :
-Element integer
-Element ;
+Lexeme- v1 and token- id Next lexeme- :
 Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATIONS
-Element DECLARATIONS
-Element ASSIGNMENT
-Element }
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- integer and token- integer
-Element ;
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATIONS
-Element DECLARATIONS
-Element ASSIGNMENT
-Element }
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- ; and token- ;
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATIONS
-Element DECLARATIONS
-Element ASSIGNMENT
-Element }
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- DECLARATIONS
-Element ASSIGNMENT
-Element }
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATIONS
-Element ASSIGNMENT
-Element }
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- declare
-Element ID
 Element :
 Element integer
 Element ;
 Element @$@$
-Element PRIMITIVEDECLARATION
 Element @$@$
-Element DECLARATIONS
 Element ASSIGNMENT
 Element }
 Element @$@$
-Element PROGRAM
 #############################################
 #############################################
-Lexeme- declare and token- ARRAYDECLARATION
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATIONS
-Element ASSIGNMENT
-Element }
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- declare
-Element ID
-Element :
-Element array
-Element DIMENSION
-Element of
+Lexeme- : and token- : Next lexeme- integer
 Element integer
 Element ;
 Element @$@$
-Element ARRAYDECLARATION
 Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATIONS
 Element ASSIGNMENT
 Element }
 Element @$@$
-Element PROGRAM
 #############################################
 #############################################
-Lexeme- declare and token- JAGGEDDECLARATION
-Element @$@$
-Element ARRAYDECLARATION
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATIONS
-Element ASSIGNMENT
-Element }
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- J2D
-Element ROWS
-Element @$@$
-Element JAGGEDDECLARATION
-Element @$@$
-Element ARRAYDECLARATION
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATIONS
-Element ASSIGNMENT
-Element }
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- declare
-Element ID
-Element :
-Element jagged
-Element array
-Element [
-Element STAT_INT
-Element ..
-Element STAT_INT
-Element ]
-Element [
-Element ]
-Element of
-Element integer
+Lexeme- integer and token- integer Next lexeme- ;
 Element ;
 Element @$@$
-Element J2D
-Element ROWS
 Element @$@$
-Element JAGGEDDECLARATION
-Element @$@$
-Element ARRAYDECLARATION
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATIONS
 Element ASSIGNMENT
 Element }
 Element @$@$
-Element PROGRAM
 #############################################
 #############################################
-Lexeme- declare and token- J3D
-Element ROW3D
+Lexeme- ; and token- ; Next lexeme- c1
 Element @$@$
-Element J2D
-Element ROWS
 Element @$@$
-Element JAGGEDDECLARATION
-Element @$@$
-Element ARRAYDECLARATION
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATIONS
 Element ASSIGNMENT
 Element }
 Element @$@$
-Element PROGRAM
 #############################################
 #############################################
-Lexeme- declare and token- declare
-Element ID
-Element :
-Element jagged
-Element array
-Element [
-Element STAT_INT
-Element ..
-Element STAT_INT
-Element ]
-Element [
-Element ]
-Element [
-Element ]
-Element of
-Element integer
-Element ;
-Element @$@$
-Element J3D
-Element ROW3D
-Element @$@$
-Element J2D
-Element ROWS
-Element @$@$
-Element JAGGEDDECLARATION
-Element @$@$
-Element ARRAYDECLARATION
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATIONS
-Element ASSIGNMENT
+Lexeme- c1 and token- ASSIGNMENT Next lexeme- =
 Element }
 Element @$@$
-Element PROGRAM
+#############################################
+#############################################
+Lexeme- c1 and token- ID Next lexeme- =
+Element =
+Element EXPRESSION
+Element @$@$
+Element }
+Element @$@$
+#############################################
+#############################################
+Lexeme- c1 and token- id Next lexeme- =
+Element @$@$
+Element =
+Element EXPRESSION
+Element @$@$
+Element }
+Element @$@$
+#############################################
+#############################################
+Lexeme- = and token- = Next lexeme- c2
+Element EXPRESSION
+Element @$@$
+Element }
+Element @$@$
+#############################################
+#############################################
+Lexeme- c2 and token- EXPRESSION Next lexeme- +
+Element @$@$
+Element }
+Element @$@$
+#############################################
+#############################################
+Lexeme- c2 and token- STAT_INT Next lexeme- +
+Element OPERATOR
+Element EXPRESSION
+Element @$@$
+Element @$@$
+Element }
+Element @$@$
+#############################################
+#############################################
+Lexeme- c2 and token- int Next lexeme- +
+Element @$@$
+Element OPERATOR
+Element EXPRESSION
+Element @$@$
+Element @$@$
+Element }
+Element @$@$
+#############################################
+#############################################
+Lexeme- c2 and token- ID Next lexeme- +
+Element OPERATOR
+Element EXPRESSION
+Element @$@$
+Element @$@$
+Element }
+Element @$@$
+#############################################
+#############################################
+Lexeme- c2 and token- id Next lexeme- +
+Element @$@$
+Element OPERATOR
+Element EXPRESSION
+Element @$@$
+Element @$@$
+Element }
+Element @$@$
+#############################################
+#############################################
+Lexeme- + and token- OPERATOR Next lexeme- c1
+Element EXPRESSION
+Element @$@$
+Element @$@$
+Element }
+Element @$@$
+#############################################
+#############################################
+Lexeme- + and token- + Next lexeme- c1
+Element @$@$
+Element EXPRESSION
+Element @$@$
+Element @$@$
+Element }
+Element @$@$
+#############################################
+#############################################
+Lexeme- c1 and token- EXPRESSION Next lexeme- ;
+Element @$@$
+Element @$@$
+Element }
+Element @$@$
+#############################################
+#############################################
+Lexeme- c1 and token- STAT_INT Next lexeme- ;
+Element OPERATOR
+Element EXPRESSION
+Element @$@$
+Element @$@$
+Element @$@$
+Element }
+Element @$@$
+#############################################
+#############################################
+Lexeme- c1 and token- int Next lexeme- ;
+Element @$@$
+Element OPERATOR
+Element EXPRESSION
+Element @$@$
+Element @$@$
+Element @$@$
+Element }
+Element @$@$
+#############################################
+#############################################
+Lexeme- c1 and token- ID Next lexeme- ;
+Element OPERATOR
+Element EXPRESSION
+Element @$@$
+Element @$@$
+Element @$@$
+Element }
+Element @$@$
+#############################################
+#############################################
+Lexeme- c1 and token- id Next lexeme- ;
+Element @$@$
+Element OPERATOR
+Element EXPRESSION
+Element @$@$
+Element @$@$
+Element @$@$
+Element }
+Element @$@$
+#############################################
+#############################################
+Lexeme- ; and token- OPERATOR Next lexeme- }
+Element EXPRESSION
+Element @$@$
+Element @$@$
+Element @$@$
+Element }
+Element @$@$
+#############################################
+#############################################
+Lexeme- ; and token- + Next lexeme- }
+Element @$@$
+Element EXPRESSION
+Element @$@$
+Element @$@$
+Element @$@$
+Element }
+Element @$@$
+#############################################
+#############################################
+Lexeme- ; and token- - Next lexeme- }
+Element @$@$
+Element @$@$
+Element @$@$
+Element }
+Element @$@$
+#############################################
+#############################################
+Lexeme- ; and token- * Next lexeme- }
+Element @$@$
 #############################################
