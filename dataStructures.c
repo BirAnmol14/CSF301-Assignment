@@ -374,34 +374,44 @@ parseTree * newNode(char * tkn){
 }
 
 parseTree * addChild(parseTree * parent, parseTree * child){
-	if(parent->child== NULL){
-		parent->child= (parseTree *)malloc(sizeof(parseTree));
-		parent->child= child;
-	}
-	else{
-		parseTree * chd= parent->child;
-		while(chd->sibling != NULL){
-			chd= chd->sibling;
-		}
-		chd->sibling= child;
-		child->sibling= NULL;
-	}
-	return parent;
+	// if(parent->child== NULL){
+	// 	parent->child= (parseTree *)malloc(sizeof(parseTree));
+	// 	parent->child= child;
+	// }
+	// else{
+	// 	parseTree * chd= parent->child;
+	// 	while(chd->sibling != NULL){
+	// 		chd= chd->sibling;
+	// 	}
+	// 	chd->sibling= child;
+	// 	child->sibling= NULL;
+	// }
+	// return parent;
 }
 
 void freeChildren(parseTree * node){
-	parseTree * child= node->child;
-	if(child== NULL){
-		return;
-	}
-	parseTree * temp;
-	while(child->sibling != NULL){
-		temp= child->sibling;
-		freeChildren(child);
-		free(child);
-		child= temp;
-	}
-	free(child);
+	// printf("Parent recieved-%s\n", node->token);
+	// parseTree * child= node->child;
+	// if(child== NULL){
+	// 	printf("No child\n");
+	// 	return;
+	// }
+	// printf("First child- %s\n", child->token);
+	// node->child= NULL;
+	// parseTree * temp;
+	// int cnt=0;
+	// while(child->sibling != NULL){
+	// 	// printf("Sibling no- %d\n", cnt++);
+	// 	temp= child->sibling;
+	// 	printf("Deleting children of %s if sibling exists\n", child->token);
+	// 	freeChildren(child);
+	// 	printf("Deleting child %s if sibling exists\n", child->token);
+	// 	free(child);
+	// 	child= temp;
+	// }
+	// printf("Last deletion after loop\n");
+	// freeChildren(child);
+	// free(child);
 }
 // Stack
 
@@ -443,4 +453,42 @@ char * peek(Stack* stack)
     if (isEmpty(stack))
         return NULL;
     return stack->token[stack->top];
+}
+
+allNonTerminals * nt= NULL;
+
+void mapToLL(){
+	if(map!=NULL){
+		 for(int i = 0; i < mapSize; i++)
+		{
+			if(map[i]!=NULL){
+				addNonTerminals(map[i]->key);
+			}
+		}
+	}
+}
+void addNonTerminals(char * s){
+		if(nt==NULL){
+			nt=malloc(1*sizeof(allNonTerminals));
+			nt->head=malloc(1*sizeof(ntNode*));
+			nt->tail=nt->head;
+			nt->head->val=s;
+			nt->head->next=NULL;
+		}
+		if(nt->tail){
+			nt->tail->next=malloc(1*sizeof(ntNode*));
+			nt->tail=nt->tail->next;
+			nt->tail->val=s;
+			nt->tail->next=NULL;
+		}
+}
+int isNonTerminal(char *s){
+	ntNode * tmp=nt->head;
+	while(tmp){
+		if(strcmp(tmp->val,s)==0){
+			return 1;
+		}
+		tmp=tmp->next;
+	}
+	return 0;
 }

@@ -1,5 +1,5 @@
 program ()
 {
-	declare v : integer ;
-	a = 23 ;
+	declare _v_ : integer ;
+	declare ab : boolean ;
 }

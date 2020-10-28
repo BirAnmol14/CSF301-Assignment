@@ -45,46 +45,25 @@ void testOption(int option){
 void option1(){
 	puts("\nOption 1\n");
 	readGrammar("grammar.txt",&g);
-	printGrammar(&g);
+	// printGrammar(&g);
 	printMap();
 	if(ts==NULL){
 		ts=newTokenStream();
 	}
+
+	printf("%d\n", isNonTerminal("VAR_REAL"));
+	if(search("VAR_REAL"))
+		printf("SUCCESS\n");
+
 	puts("\nTokenizing Source Code");
-	tokeniseSourcecode("smpl.txt",ts);
-	printTokenStream(ts);
+	tokeniseSourcecode("sampleprogram.txt",ts);
+	// printTokenStream(ts);
 	
-	mapNode* t=search("ALPHABET");
-	if(t){
-		printf("Key: %s\n",t->key);
-		printf("Indices in Grammar ds: line number grammar.txt-1\n");
-		while(t){
-			printf("%d ",t->value);
-			t=t->next;
-		}
-		printf("NULL\n");
-	}else{
-		printf("Not Present");
-	}
-	
-	t=search("A+=fLPHABET");
-	if(t){
-		printf("Key: %s\n",t->key);
-		printf("Indices in Grammar ds: line number grammar.txt-1\n");
-		while(t){
-			printf("%d ",t->value);
-			t=t->next;
-		}
-		printf("NULL\n");
-	}else{
-		printf("Not Present");
-	}
 	parseTree * root;
 	if(createParseTree(root , ts, g))
 		printf("\nTree created\n");
 	else
 		printf("\nTree creation failed\n");
-
 	
 }
 void option2(){

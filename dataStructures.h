@@ -111,3 +111,15 @@ int hashValue(char * key);
 void add(char * key,int value);
 mapNode * search(char * key);
 void printMap();
+
+void mapToLL();
+typedef struct ntNode{
+	char * val;
+	struct ntNode * next;
+}ntNode;
+typedef struct allNonTerminals{
+	ntNode * head;
+	ntNode * tail;
+}allNonTerminals;
+void addNonTerminals(char *);
+int isNonTerminal(char *);

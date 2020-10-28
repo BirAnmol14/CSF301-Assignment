@@ -30,6 +30,7 @@ void readGrammar(char * filename,grammar * g){
 			line++;
 		}
 		free(temp);
+		mapToLL();
 	
 		fclose(fp);
 	}else{
