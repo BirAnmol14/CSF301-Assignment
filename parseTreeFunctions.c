@@ -126,10 +126,10 @@ int checkTree(grammar *G, parseTree *parent)
             for (int i = 0; i < cnt; i++)
             {
 
-                if (!strcmp(tn->lexeme, "}"))
-                {
-                    return 1;
-                }
+                // if (!strcmp(tn->lexeme, "}"))
+                // {
+                //     return 1;
+                // }
 
                 if (!strcmp(peek(st), "ID"))
                 {
