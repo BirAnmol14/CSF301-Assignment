@@ -3,15 +3,13 @@ Lexeme- program and token- PROGRAM
 #############################################
 #############################################
 Lexeme- program and token- PROGRAM_KWD
-Element BRACKETS
-Element OPEN_CURL
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Element ()
+Element {
+Element DECLARATIONS
+Element DECLARATIONS
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
@@ -19,1168 +17,365 @@ Element PROGRAM
 Lexeme- program and token- program
 Element @$@$
 Element PROGRAM_KWD
-Element BRACKETS
-Element OPEN_CURL
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- () and token- BRACKETS
-Element OPEN_CURL
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Element ()
+Element {
+Element DECLARATIONS
+Element DECLARATIONS
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
 Lexeme- () and token- ()
-Element @$@$
-Element BRACKETS
-Element OPEN_CURL
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- { and token- OPEN_CURL
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Element {
+Element DECLARATIONS
+Element DECLARATIONS
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
 Lexeme- { and token- {
-Element @$@$
-Element OPEN_CURL
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Element DECLARATIONS
+Element DECLARATIONS
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
-Lexeme- declare and token- DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Lexeme- declare and token- DECLARATIONS
+Element DECLARATIONS
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
 Lexeme- declare and token- PRIMITIVEDECLARATION
 Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- DECLARE_KWD
-Element ID
-Element COLON
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Element DECLARATIONS
+Element DECLARATIONS
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
 Lexeme- declare and token- declare
-Element @$@$
-Element DECLARE_KWD
 Element ID
-Element COLON
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
+Element :
+Element integer
+Element ;
 Element @$@$
 Element PRIMITIVEDECLARATION
 Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- : and token- COLON
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Element DECLARATIONS
+Element DECLARATIONS
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
 Lexeme- : and token- :
-Element @$@$
-Element COLON
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
+Element integer
+Element ;
 Element @$@$
 Element PRIMITIVEDECLARATION
 Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- integer and token- TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- integer and token- INTEGER_KWD
-Element @$@$
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Element DECLARATIONS
+Element DECLARATIONS
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
 Lexeme- integer and token- integer
-Element @$@$
-Element INTEGER_KWD
-Element @$@$
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
+Element ;
 Element @$@$
 Element PRIMITIVEDECLARATION
 Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- ; and token- SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Element DECLARATIONS
+Element DECLARATIONS
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
 Lexeme- ; and token- ;
 Element @$@$
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
 Element PRIMITIVEDECLARATION
 Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Element DECLARATIONS
+Element DECLARATIONS
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
-Lexeme- declare and token- DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Lexeme- declare and token- DECLARATIONS
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
 Lexeme- declare and token- PRIMITIVEDECLARATION
 Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- DECLARE_KWD
-Element ID
-Element COLON
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Element DECLARATIONS
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
 Lexeme- declare and token- declare
-Element @$@$
-Element DECLARE_KWD
 Element ID
-Element COLON
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
+Element :
+Element integer
+Element ;
 Element @$@$
 Element PRIMITIVEDECLARATION
 Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- : and token- COLON
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Element DECLARATIONS
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
 Lexeme- : and token- :
-Element @$@$
-Element COLON
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
+Element integer
+Element ;
 Element @$@$
 Element PRIMITIVEDECLARATION
 Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- integer and token- TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- integer and token- INTEGER_KWD
-Element @$@$
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Element DECLARATIONS
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
 Lexeme- integer and token- integer
-Element @$@$
-Element INTEGER_KWD
-Element @$@$
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
+Element ;
 Element @$@$
 Element PRIMITIVEDECLARATION
 Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- ; and token- SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Element DECLARATIONS
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
 Lexeme- ; and token- ;
 Element @$@$
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
 Element PRIMITIVEDECLARATION
 Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Element DECLARATIONS
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
-Lexeme- declare and token- DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Lexeme- declare and token- DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
 Lexeme- declare and token- PRIMITIVEDECLARATION
 Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- DECLARE_KWD
-Element ID
-Element COLON
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
 Lexeme- declare and token- declare
-Element @$@$
-Element DECLARE_KWD
 Element ID
-Element COLON
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
+Element :
+Element integer
+Element ;
 Element @$@$
 Element PRIMITIVEDECLARATION
 Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
-Lexeme- : and token- COLON
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
+Lexeme- declare and token- ARRAYDECLARATION
 Element @$@$
 Element PRIMITIVEDECLARATION
 Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- : and token- :
-Element @$@$
-Element COLON
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- integer and token- TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- integer and token- INTEGER_KWD
-Element @$@$
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- integer and token- integer
-Element @$@$
-Element INTEGER_KWD
-Element @$@$
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- ; and token- SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- ; and token- ;
-Element @$@$
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- DECLARE_KWD
-Element ID
-Element COLON
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
 Lexeme- declare and token- declare
-Element @$@$
-Element DECLARE_KWD
 Element ID
-Element COLON
-Element TYPE_KWD
-Element SEMI_COLON
+Element :
+Element array
+Element DIMENSION
+Element of
+Element integer
+Element ;
 Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- : and token- COLON
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
+Element ARRAYDECLARATION
 Element @$@$
 Element PRIMITIVEDECLARATION
 Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
-Lexeme- : and token- :
+Lexeme- declare and token- JAGGEDDECLARATION
 Element @$@$
-Element COLON
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
+Element ARRAYDECLARATION
 Element @$@$
 Element PRIMITIVEDECLARATION
 Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
-Lexeme- integer and token- TYPE_KWD
-Element SEMI_COLON
+Lexeme- declare and token- J2D
+Element ROWS
 Element @$@$
-Element SINGLEPRIMITIVE
+Element JAGGEDDECLARATION
+Element @$@$
+Element ARRAYDECLARATION
 Element @$@$
 Element PRIMITIVEDECLARATION
 Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- integer and token- INTEGER_KWD
-Element @$@$
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- integer and token- integer
-Element @$@$
-Element INTEGER_KWD
-Element @$@$
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- ; and token- SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- ; and token- ;
-Element @$@$
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- declare and token- DECLARE_KWD
-Element ID
-Element COLON
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
 Lexeme- declare and token- declare
-Element @$@$
-Element DECLARE_KWD
 Element ID
-Element COLON
-Element TYPE_KWD
-Element SEMI_COLON
+Element :
+Element jagged
+Element array
+Element [
+Element STAT_INT
+Element ..
+Element STAT_INT
+Element ]
+Element [
+Element ]
+Element of
+Element integer
+Element ;
 Element @$@$
-Element SINGLEPRIMITIVE
+Element J2D
+Element ROWS
 Element @$@$
-Element PRIMITIVEDECLARATION
+Element JAGGEDDECLARATION
 Element @$@$
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- : and token- COLON
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- : and token- :
-Element @$@$
-Element COLON
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
+Element ARRAYDECLARATION
 Element @$@$
 Element PRIMITIVEDECLARATION
 Element @$@$
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
-Lexeme- integer and token- TYPE_KWD
-Element SEMI_COLON
+Lexeme- declare and token- J3D
+Element ROW3D
 Element @$@$
-Element SINGLEPRIMITIVE
+Element J2D
+Element ROWS
+Element @$@$
+Element JAGGEDDECLARATION
+Element @$@$
+Element ARRAYDECLARATION
 Element @$@$
 Element PRIMITIVEDECLARATION
 Element @$@$
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################
 #############################################
-Lexeme- integer and token- INTEGER_KWD
+Lexeme- declare and token- declare
+Element ID
+Element :
+Element jagged
+Element array
+Element [
+Element STAT_INT
+Element ..
+Element STAT_INT
+Element ]
+Element [
+Element ]
+Element [
+Element ]
+Element of
+Element integer
+Element ;
 Element @$@$
-Element TYPE_KWD
-Element SEMI_COLON
+Element J3D
+Element ROW3D
 Element @$@$
-Element SINGLEPRIMITIVE
+Element J2D
+Element ROWS
+Element @$@$
+Element JAGGEDDECLARATION
+Element @$@$
+Element ARRAYDECLARATION
 Element @$@$
 Element PRIMITIVEDECLARATION
 Element @$@$
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- integer and token- integer
-Element @$@$
-Element INTEGER_KWD
-Element @$@$
-Element TYPE_KWD
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- ; and token- SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- ; and token- ;
-Element @$@$
-Element SEMI_COLON
-Element @$@$
-Element SINGLEPRIMITIVE
-Element @$@$
-Element PRIMITIVEDECLARATION
-Element @$@$
-Element DECLARATION
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- c1 and token- ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- c1 and token- JARR_ASS_STMT
-Element SEMI_COLON
-Element @$@$
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- = and token- EQUALS
-Element JARR_EXPRESSION
-Element @$@$
-Element JARR_ASS_STMT
-Element SEMI_COLON
-Element @$@$
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- = and token- =
-Element @$@$
-Element EQUALS
-Element JARR_EXPRESSION
-Element @$@$
-Element JARR_ASS_STMT
-Element SEMI_COLON
-Element @$@$
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- c2 and token- JARR_EXPRESSION
-Element @$@$
-Element JARR_ASS_STMT
-Element SEMI_COLON
-Element @$@$
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- + and token- SEMI_COLON
-Element @$@$
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- + and token- ;
-Element @$@$
-Element SEMI_COLON
-Element @$@$
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- + and token- RARR_ASS_STMT
-Element SEMI_COLON
-Element @$@$
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- + and token- INT_ASS_STMT
-Element SEMI_COLON
-Element @$@$
-Element RARR_ASS_STMT
-Element SEMI_COLON
-Element @$@$
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- + and token- BOOL_ASS_STMT
-Element SEMI_COLON
-Element @$@$
-Element INT_ASS_STMT
-Element SEMI_COLON
-Element @$@$
-Element RARR_ASS_STMT
-Element SEMI_COLON
-Element @$@$
-Element ASSIGN_STMT
-Element CLS_CURL
-Element @$@$
-Element PROGRAM
-#############################################
-#############################################
-Lexeme- + and token- REAL_ASS_STMT
-Element SEMI_COLON
-Element @$@$
-Element BOOL_ASS_STMT
-Element SEMI_COLON
-Element @$@$
-Element INT_ASS_STMT
-Element SEMI_COLON
-Element @$@$
-Element RARR_ASS_STMT
-Element SEMI_COLON
-Element @$@$
-Element ASSIGN_STMT
-Element CLS_CURL
+Element DECLARATIONS
+Element ASSIGNMENT
+Element }
 Element @$@$
 Element PROGRAM
 #############################################

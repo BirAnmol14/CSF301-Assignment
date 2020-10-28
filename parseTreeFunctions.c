@@ -111,11 +111,11 @@ int checkTree(grammar *G, parseTree *parent)
             {     if(!strcmp(tmp->name,"STMTS")){
 
                 while(pqr--){
-                  push(temp_stack,"DECLARATION");
+                  push(temp_stack,"DECLARATIONS");
                   cnt++;
                 }
                 while(mnq--){
-                  push(temp_stack,"ASSIGN_STMT");
+                  push(temp_stack,"ASSIGNMENT");
                   cnt++;
                 }
                 tmp=tmp->next;
@@ -152,8 +152,9 @@ int checkTree(grammar *G, parseTree *parent)
                         continue;
                     }
                     else
-                    { return -1;  
-                      // tn = ab;
+                    {
+                      tn = ab;
+                      return -1;
                       //   correctness_flag= 0;
                       //   rules_list= rules_list->next;
                       //   while (strcmp(peek(st), "@$@$"))
@@ -167,9 +168,9 @@ int checkTree(grammar *G, parseTree *parent)
                     }
                 }
 
-                if (!strcmp(peek(st), "STATIC_INT"))
+                if (!strcmp(peek(st), "STAT_INT"))
                 {
-                    if (!strcmp(tn->token, "STATIC_INT"))
+                    if (!strcmp(tn->token, "STAT_INT"))
                     {
                         addChild(parent, newNode(tn->lexeme));
                         tn = tn->next;
@@ -177,8 +178,9 @@ int checkTree(grammar *G, parseTree *parent)
                         continue;
                     }
                     else
-                    { return -1;
-                      // tn = ab;
+                    {
+                      tn = ab;
+                      return -1;
                       //   rules_list= rules_list->next;
                       //   correctness_flag= 0;
                       //   while (strcmp(peek(st), "@$@$"))

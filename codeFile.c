@@ -44,27 +44,24 @@ void testOption(int option){
 }
 void option1(){
 	puts("\nOption 1\n");
-	readGrammar("grammar.txt",&g);
+	readGrammar("grammar2.txt",&g);
 	// printGrammar(&g);
-	printMap();
+	// printMap();
 	if(ts==NULL){
 		ts=newTokenStream();
 	}
 
-	printf("%d\n", isNonTerminal("VAR_REAL"));
-	if(search("VAR_REAL"))
-		printf("SUCCESS\n");
-
 	puts("\nTokenizing Source Code");
 	tokeniseSourcecode("smpl.txt",ts);
-	printTokenStream(ts);
+	// printTokenStream(ts);
+
 
 	parseTree * root;
 	if(createParseTree(root , ts, g))
 		printf("\nTree created\n");
 	else
 		printf("\nTree creation failed\n");
-
+	// findHashes();
 }
 void option2(){
 	option1();

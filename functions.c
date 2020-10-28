@@ -9,7 +9,7 @@ void readGrammar(char * filename,grammar * g){
 	newGrammar(filename,g);
 	puts("Reading Grammar");
 	FILE * fp= fopen(filename, "r");
-
+	FILE * fp1 = fopen("LHS.txt","w");
 	if(fp){
 		char * temp =(char *)malloc(sizeof(char)*500);
 		int line=0;
@@ -20,7 +20,7 @@ void readGrammar(char * filename,grammar * g){
 			char * tk=strtok(temp1," \t");
 			while(tk){
 				if(i==0)
-				{newLHS(&g->rules[line],tk);i++;add(tk,line);}
+				{newLHS(&g->rules[line],tk);i++;add(tk,line);fprintf(fp1,"%s\n",tk);}
 				else{
 					if(strcmp(tk,"\\0")==0){newRHS(&g->rules[line],"");}
 					else{newRHS(&g->rules[line],tk);}
@@ -33,6 +33,7 @@ void readGrammar(char * filename,grammar * g){
 		}
 		free(temp);
 		mapToLL();
+		fclose(fp1);
 
 		fclose(fp);
 	}else{
@@ -55,7 +56,7 @@ void tokeniseSourcecode(char * filename,tokenStream * ts){
 			char * tk=strtok(line1," \t");
 			while(tk){
 				char* tmp = getToken(tk);
-				if(!strcmp(tmp,"DECLARE_KWD")||!strcmp(tmp,"ROW_INIT"))
+				if(!strcmp(tk,"declare")||!strcmp(tk,"R1"))
 				decl_count++;
 				ts=addTokenNode(ts,tk,tmp,line_count);
 				tk=strtok(NULL," \t");
@@ -101,37 +102,37 @@ int isValidVarId(char * var){
 	return valid;
 }
 char * getToken(char * lexeme){
-	if(strcmp(lexeme,"declare")==0){return "DECLARE_KWD";}
-	if(strcmp(lexeme,"program")==0){return "PROGRAM_KWD";}
-	if(strcmp(lexeme,"boolean")==0){return "TYPE_KWD";}
-	if(strcmp(lexeme,"integer")==0){return "TYPE_KWD";}
-	if(strcmp(lexeme,"real")==0){return "TYPE_KWD";}
-	if(strcmp(lexeme,"size")==0){return "SIZE_KWD";}
-	if(strcmp(lexeme,"list")==0){return "LIST_KWD";}
-	if(strcmp(lexeme,"of")==0){return "OF_KWD";}
-	if(strcmp(lexeme,"variables")==0){return "VARIABLES_KWD";}
-	if(strcmp(lexeme,"array")==0){return "ARRAY_KWD";}
-	if(strcmp(lexeme,"jagged")==0){return "JAGGED_KWD";}
-	if(strcmp(lexeme,"values")==0){return "VALUES_KWD";}
-	if(strcmp(lexeme,"..")==0){return "DOTDOUBLE";}
-	if(strcmp(lexeme,"R1")==0){return "ROW_INIT";}
-	if(strcmp(lexeme,"()")==0){return "BRACKETS";}
-	if(strcmp(lexeme,")")==0){return "CLS_RND";}
-	if(strcmp(lexeme,"(")==0){return "OPEN_RND";}
-	if(strcmp(lexeme,"]")==0){return "CLS_SQ";}
-	if(strcmp(lexeme,"[")==0){return "OPEN_SQ";}
-	if(strcmp(lexeme,"}")==0){return "CLS_CURL";}
-	if(strcmp(lexeme,"{")==0){return "OPEN_CURL";}
-	if(strcmp(lexeme,",")==0){return "COMMA";}
-	if(strcmp(lexeme,":")==0){return "COLON";}
-	if(strcmp(lexeme,";")==0){return "SEMI_COLON";}
+	if(strcmp(lexeme,"declare")==0){return "terminal";}
+	if(strcmp(lexeme,"program")==0){return "terminal";}
+	if(strcmp(lexeme,"boolean")==0){return "terminal";}
+	if(strcmp(lexeme,"integer")==0){return "terminal";}
+	if(strcmp(lexeme,"real")==0){return "terminal";}
+	if(strcmp(lexeme,"size")==0){return "terminal";}
+	if(strcmp(lexeme,"list")==0){return "terminal";}
+	if(strcmp(lexeme,"of")==0){return "terminal";}
+	if(strcmp(lexeme,"variables")==0){return "terminal";}
+	if(strcmp(lexeme,"array")==0){return "terminal";}
+	if(strcmp(lexeme,"jagged")==0){return "terminal";}
+	if(strcmp(lexeme,"values")==0){return "terminal";}
+	if(strcmp(lexeme,"..")==0){return "terminal";}
+	if(strcmp(lexeme,"R1")==0){return "terminal";}
+	if(strcmp(lexeme,"()")==0){return "terminal";}
+	if(strcmp(lexeme,")")==0){return "terminal";}
+	if(strcmp(lexeme,"(")==0){return "terminal";}
+	if(strcmp(lexeme,"]")==0){return "terminal";}
+	if(strcmp(lexeme,"[")==0){return "terminal";}
+	if(strcmp(lexeme,"}")==0){return "terminal";}
+	if(strcmp(lexeme,"{")==0){return "terminal";}
+	if(strcmp(lexeme,":")==0){return "terminal";}
+	if(strcmp(lexeme,";")==0){return "terminal";}
+	if(strcmp(lexeme,"=")==0){return "terminal";}
 	if(strcmp(lexeme,"+")==0){return "OPERATOR";}
 	if(strcmp(lexeme,"-")==0){return "OPERATOR";}
 	if(strcmp(lexeme,"*")==0){return "OPERATOR";}
-	if(strcmp(lexeme,"/")==0){return "DIV_OPERATOR";}
+	if(strcmp(lexeme,"/")==0){return "OPERATOR";}
 	if(strcmp(lexeme,"&&&")==0){return "BOOL_OPERATOR";}
 	if(strcmp(lexeme,"|||")==0){return "BOOL_OPERATOR";}
-	if(strcmp(lexeme,"=")==0){return "EQUALS";}
+
 	if(isValidVarId(lexeme)){return "ID";}
 	int Num=1;
 	for(int i=0;i<strlen(lexeme);i++){
@@ -140,6 +141,6 @@ char * getToken(char * lexeme){
 			break;
 		}
 	}
-	if(Num){return "STATIC_INT";}
+	if(Num){return "STAT_INT";}
 	return "Unidentified Token";
 }

@@ -2,10 +2,8 @@ program ()
 {
 
 declare v1 : integer ;
-declare v1 : integer ;
-declare v1 : integer ;
-declare v1 : integer ;
-declare v1 : integer ;
+declare _AB : integer ;
+declare list of variables new d w e2 : integer ;
 
 c1 = c2 + c1 ;
 

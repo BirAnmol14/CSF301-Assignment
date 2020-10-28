@@ -127,3 +127,4 @@ typedef struct allNonTerminals{
 }allNonTerminals;
 void addNonTerminals(char *);
 int isNonTerminal(char *);
+void findHashes();

@@ -31,7 +31,7 @@ void newGrammar(char * filename,grammar *g){
 		(g->rules[i]).name=malloc(MAX_LENGTH*sizeof(char));
 		(g->rules[i]).next=NULL;
 	}
-	newHashMap(5*grammarSize);
+	newHashMap(13*grammarSize);
 }
 void newLHS(Node *h,char * str){
 	strcpy(h->name,str);
@@ -315,9 +315,10 @@ void itoa(int n, char s[])
 	mapSize=size;
 }
 int hashValue(char * key){
-	int hash = 31;
+	int hash = 13;
 	for (int i = 0; i < strlen(key); i++) {
 		hash = hash*7 + key[i]*(i+1);
+		hash%=mapSize;
 	}
     hash%=mapSize;
 	return hash>0?hash:-hash;
@@ -352,13 +353,13 @@ mapNode * search(char * key)
 }
 
 void printMap()
-{
+{		FILE * fp = fopen("map.txt","w");
     for(int i = 0; i < mapSize; i++)
     {
         mapNode *temp = map[i];
         if(temp!=NULL){
 			printf("map[%d] with key %s\n",i,temp->key);
-
+			fprintf(fp,"%s\n",temp->key);
 			while(temp)
 			{
 				printf("%d -->",temp->value);
@@ -367,6 +368,7 @@ void printMap()
 			printf("NULL\n");
 		}
     }
+		fclose(fp);
 }
 
 // Parse Tree DS
@@ -481,6 +483,7 @@ void addNonTerminals(char * s){
 			nt->tail=nt->head;
 			nt->head->val=s;
 			nt->head->next=NULL;
+			return ;
 		}
 		if(nt->tail){
 			nt->tail->next=malloc(1*sizeof(ntNode*));
@@ -498,4 +501,11 @@ int isNonTerminal(char *s){
 		tmp=tmp->next;
 	}
 	return 0;
+}
+void findHashes(){
+	ntNode * tmp=nt->head;
+	while(tmp){
+		printf("%s %d\n",tmp->val,hashValue(tmp->val));
+		tmp=tmp->next;
+	}
 }
