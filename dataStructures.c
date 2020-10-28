@@ -7,6 +7,9 @@
 int grammarSize=0;
 int typeSize=0;
 mapNode ** map=NULL;
+allNonTerminals * nt=NULL;
+Stack * stack0=NULL;
+Stack * stack1=NULL;
 int mapSize=0;
 void newGrammar(char * filename,grammar *g){
 	FILE * fp=fopen(filename,"r");
@@ -364,6 +367,7 @@ void printMap()
 		}
     }
 }
+<<<<<<< HEAD
 
 // Parse Tree DS
 parseTree * newNode(char * tkn){
@@ -443,3 +447,151 @@ char * peek(Stack* stack)
         return NULL;
     return stack->token[stack->top];
 }
+=======
+void mapToLL(){
+	if(map!=NULL){
+		 for(int i = 0; i < mapSize; i++)
+		{
+			if(map[i]!=NULL){
+				addNonTerminals(map[i]->key);
+			}
+		}
+	}
+}
+void addNonTerminals(char * s){
+		if(nt==NULL){
+			nt=malloc(1*sizeof(allNonTerminals));
+			nt->head=malloc(1*sizeof(ntNode*));
+			nt->tail=nt->head;
+			nt->head->val=s;
+			nt->head->next=NULL;
+		}
+		if(nt->tail){
+			nt->tail->next=malloc(1*sizeof(ntNode*));
+			nt->tail=nt->tail->next;
+			nt->tail->val=s;
+			nt->tail->next=NULL;
+		}
+}
+int isNonTerminal(char *s){
+	ntNode * tmp=nt->head;
+	while(tmp){
+		if(strcmp(tmp->val,s)==0){
+			return 1;
+		}
+		tmp=tmp->next;
+	}
+	return 0;
+}
+
+parseTree * newTree(){
+	parseTree * pt=malloc(1*sizeof(parseTree));
+	pt->start=NULL;
+	return pt;
+}
+treeNode * newTreeNode(int level,char * token,int hasType){
+	treeNode * tn=malloc(1*sizeof(treeNode));
+	tn->level=level;
+	tn->token=token;
+	tn->hasType=hasType;
+	tn->child=NULL;
+	tn->sibling=NULL;
+	if(hasType==0){
+		(tn->v).other=malloc(sizeof(char)*(strlen("none")+1));
+		strcpy((tn->v).other,"none");
+	}else{
+		(tn->v).type=NULL;// manully add Type
+	}
+	return tn;
+}
+void addSibling(treeNode * tn,treeNode *sib){
+	treeNode * tmp=tn;
+	while(tn->sibling){
+		tn=tn->sibling;
+	}
+	tn->sibling=sib;
+}
+void addChild(treeNode *tn, treeNode *chi){
+	if(tn->child){
+		addSibling(tn->child,chi);
+	}
+	else{
+		tn->child=chi;
+	}
+}
+void deleteChild(treeNode *tn){
+	treeNode * t=tn->child;
+	if(t){
+		free(t);
+	}
+	tn->child=NULL;
+}
+void newStack(){
+	stack0=malloc(1*sizeof(Stack));
+	stack0->top=-1;
+	stack0->size=5;
+	stack0->symbol=malloc(5*sizeof(char *));
+	stack1=malloc(1*sizeof(Stack));
+	stack1->top=-1;
+	stack1->size=5;
+	stack1->symbol=malloc(5*sizeof(char *));
+}
+void push(char * s,int i){
+	if(i==0){
+		if(isFull(i)){
+		stack0->size=2*stack0->size;
+		stack0->symbol=realloc(stack0->symbol,stack0->size*sizeof(char *));
+		}
+		stack0->top++;
+		(stack0->symbol)[stack0->top]=s;
+	}else if(i==1){
+		if(isFull(i)){
+		stack1->size=2*stack0->size;
+		stack1->symbol=realloc(stack1->symbol,stack1->size*sizeof(char *));
+		}
+		stack1->top++;
+		(stack1->symbol)[stack1->top]=s;
+	}	
+}
+char * pop(int i){
+	if(i==0){
+		if(!isEmpty(i)){
+			char * s=stack0->symbol[stack0->top];
+			stack0->top--;
+			return s;
+		}
+		else{
+			return NULL;
+		}
+	}else if(i==1){if(!isEmpty(i)){
+			char * s=stack1->symbol[stack1->top];
+			stack1->top--;
+			return s;
+		}
+		else{
+			return NULL;
+		}
+	}
+	
+}
+int isEmpty(int i){
+	if(i==0){
+		return stack0->top==-1?1:0;
+	}else if(i==1){
+		return stack1->top==-1?1:0;
+	}
+}
+int isFull(int i){
+	if(i==0){
+		if(stack0->top==stack0->size-1){
+			return 1;
+		}
+		return 0;
+	}else if(i==1){
+		if(stack1->top==stack1->size-1){
+			return 1;
+		}
+		return 0;
+	}
+}
+>>>>>>> 88d4db4f966d4252905404d020dc3a1d55a54316

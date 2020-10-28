@@ -5,6 +5,7 @@
 #include "parseTreeFunctions.h"
 grammar g;
 tokenStream * ts=NULL;
+parseTree * pt=NULL;
 typeExpressionTable * tab=NULL;
 void printOptions();
 void testOption(int);
@@ -52,6 +53,7 @@ void option1(){
 	}
 	puts("\nTokenizing Source Code");
 	tokeniseSourcecode("sampleprogram.txt",ts);
+<<<<<<< HEAD
 	printTokenStream(ts);
 	
 	mapNode* t=search("ALPHABET");
@@ -86,6 +88,11 @@ void option1(){
 		printf("\nTree creation failed\n");
 
 	
+=======
+	printTokenStream(ts);	
+	pt=newTree();
+	createParseTree(pt,ts,g);
+>>>>>>> 88d4db4f966d4252905404d020dc3a1d55a54316
 }
 void option2(){
 	option1();
