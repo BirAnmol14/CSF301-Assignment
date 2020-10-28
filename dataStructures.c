@@ -319,7 +319,6 @@ int hashValue(char * key){
 }
 void add(char * key,int value)
 {
-
     mapNode *tmp = malloc(sizeof(mapNode));
 	tmp->key=NULL;
     tmp->value = value;
@@ -392,11 +391,13 @@ parseTree * addChild(parseTree * parent, parseTree * child){
 
 void freeChildren(parseTree * node){
 	parseTree * child= node->child;
-	if(child== NULL)
+	if(child== NULL){
 		return;
+	}
 	parseTree * temp;
 	while(child->sibling != NULL){
 		temp= child->sibling;
+		freeChildren(child);
 		free(child);
 		child= temp;
 	}

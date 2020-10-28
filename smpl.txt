@@ -1,7 +1,5 @@
 program ()
 {
-	declare v1 : integer ;
-	declare list of variables s1 s2 s3 : real ;
-	abc = bcd + 23 ;
-	abc = bcd * u ;
+	declare v : integer ;
+	a = 23 ;
 }
