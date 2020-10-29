@@ -52,7 +52,7 @@ void option1(){
 	}
 
 	puts("\nTokenizing Source Code");
-	tokeniseSourcecode("smpl.txt",ts);
+	tokeniseSourcecode("t2.txt",ts);
 	// printTokenStream(ts);
 
 

@@ -130,8 +130,8 @@ char * getToken(char * lexeme){
 	if(strcmp(lexeme,"-")==0){return "OPERATOR";}
 	if(strcmp(lexeme,"*")==0){return "OPERATOR";}
 	if(strcmp(lexeme,"/")==0){return "OPERATOR";}
-	if(strcmp(lexeme,"&&&")==0){return "BOOL_OPERATOR";}
-	if(strcmp(lexeme,"|||")==0){return "BOOL_OPERATOR";}
+	if(strcmp(lexeme,"&&&")==0){return "BOOLOP";}
+	if(strcmp(lexeme,"|||")==0){return "BOOLOP";}
 
 	if(isValidVarId(lexeme)){return "ID";}
 	int Num=1;

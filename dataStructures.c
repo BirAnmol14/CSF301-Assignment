@@ -31,7 +31,7 @@ void newGrammar(char * filename,grammar *g){
 		(g->rules[i]).name=malloc(MAX_LENGTH*sizeof(char));
 		(g->rules[i]).next=NULL;
 	}
-	newHashMap(13*(grammarSize-8));
+	newHashMap(13*(grammarSize-10));
 }
 void newLHS(Node *h,char * str){
 	strcpy(h->name,str);

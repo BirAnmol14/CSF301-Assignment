@@ -17,7 +17,7 @@ void printStack(Stack *st)
 
     int count = st->top;
     printf("Top- %d\n", count);
-    while (count>=0)
+    while (count >= 0)
     {
         fprintf(f, "Element %s\n", st->token[count]);
         count--;
@@ -44,6 +44,143 @@ int isT(char *token)
     return 0;
 }
 
+int predict(Node *tmp, tokenNode *tn)
+{
+
+    if (!strcmp(tmp->name, "PRIMITIVEDECLARATION") || !strcmp(tmp->name, "ARRAYDECLARATION") || !strcmp(tmp->name, "J2D") || !strcmp(tmp->name, "J3D") )
+    {
+        if (strcmp(tmp->next->next->name, "list") && !strcmp(tn->next->lexeme, "list"))
+        {
+            return 1;
+        }
+        return 0;
+    }
+
+    if (!strcmp(tmp->name, "ID_LIST"))
+    {
+        if (tmp->next->next && !strcmp(tmp->next->next->name, "ID_LIST") && strcmp(tn->next->token, "ID"))
+        {
+            return 1;
+        }
+        return 0;
+    }
+
+    if (!strcmp(tmp->name, "EXPRESSION"))
+    {
+        tmp= tmp->next;
+        int flag=0;
+        while(tmp){
+            if(!strcmp(tmp->name, "OPERATOR")){
+                flag= 1;
+                break;
+            }
+            tmp= tmp->next;
+        }
+        if(flag)
+        while(tn){
+            printf("lexeme- %s\n", tn->lexeme);
+            if(!strcmp(tn->token, "OPERATOR")){
+                return 0;
+            }
+            else if(!strcmp(tn->lexeme, ";")){
+                    return 1;
+            }
+            tn= tn->next;
+        }
+        return 0;
+    }
+
+    if (!strcmp(tmp->name, "BOOLEXPRESSION"))
+    {
+        tmp= tmp->next;
+        int flag=0;
+        while(tmp){
+            if(!strcmp(tmp->name, "BOOLOP")){
+                flag= 1;
+                break;
+            }
+            tmp= tmp->next;
+        }
+        if(flag)
+        while(tn){
+            printf("lexeme- %s\n", tn->lexeme);
+            if(!strcmp(tn->token, "BOOLOP")){
+                return 0;
+            }
+            else if(!strcmp(tn->lexeme, ";")){
+                    return 1;
+            }
+            tn= tn->next;
+        }
+        return 0;
+    }
+
+    if(!strcmp(tmp->name, "DIMENSION")){
+        tmp= tmp->next;
+        int flag=0;
+        int flag2= 0;
+        while(tmp){
+            if(!strcmp(tmp->name, "DIMENSION")){
+                flag= 1;
+                break;
+            }
+            tmp= tmp->next;
+        }
+        if(!flag)
+            return 0;
+        printf("Flag= %d and 5th lex= %s\n", flag, tn->next->next->next->next->next->lexeme);
+        if((!strcmp(tn->next->next->next->next->next->lexeme, "["))){
+            flag2= 1;
+        }
+        if(flag== 1 && flag2== 1){
+            return 0;
+        }       
+
+        return 1;
+    }
+
+    if(!strcmp(tmp->name, "STAT_LIST")){
+        tmp= tmp->next;
+        int flag= 0;
+        while(tmp){
+            if(!strcmp(tmp->name, "STAT_LIST")){
+                flag= 1;
+                break;
+            }
+            tmp= tmp->next;            
+        }
+        if(flag== 0)
+            return 0;
+
+        if(!strcmp(tn->token, "STAT_INT"))
+            return 0;
+        return 1;
+    }
+
+    if(!strcmp(tmp->name, "ASSIGNMENT") || !strcmp(tmp->name, "SUBEX")){
+        tmp= tmp->next;
+        int flag= 0;
+        while(tmp){
+            if(!strcmp(tmp->name, "ARR_DEF")){
+                flag= 1;
+                break;
+            }
+            tmp= tmp->next;            
+        }
+
+        int flag2=0;
+        if(!strcmp(tn->next->lexeme, "[")){
+            flag2=1;
+        }
+        
+        if((flag && flag2) || (!flag && !flag2) )
+            return 0;
+        return 1;
+    }
+
+    return 0;
+}
+
 int createParseTree(parseTree *t, tokenStream *s, grammar G)
 {
     z0 = (char *)malloc(sizeof(char) * 5);
@@ -54,7 +191,7 @@ int createParseTree(parseTree *t, tokenStream *s, grammar G)
     st = createStack(MAXCAPACITY);
     t = newNode(baseKwd);
     push(st, baseKwd); // push to stack
-    int zcnt= 0;
+    int zcnt = 0;
     int result;
     tokenNode *head = s->head;
     tn = s->head;
@@ -63,11 +200,19 @@ int createParseTree(parseTree *t, tokenStream *s, grammar G)
     return result; // result= 1 for successful tree creation, else -1
 }
 
-int expand(grammar *G, parseTree *parent, int * zcnt)
+int expand(grammar *G, parseTree *parent, int *zcnt)
 {
+
+                    if(!tn->next && !strcmp(tn->lexeme, "}")){
+                        while(!isEmpty(st))
+                            pop(st);
+                        printStack(st);
+                        return 1;
+                    }
+
     char *tkn = pop(st);
     int flag = 1;
-    
+
     tokenNode *temp_tn = tn;
 
     if (isT(tkn))
@@ -75,12 +220,13 @@ int expand(grammar *G, parseTree *parent, int * zcnt)
         if (!strcmp(tkn, tn->lexeme) || (!strcmp(tn->token, "ID") && !strcmp(tkn, "id")) || (!strcmp(tn->token, "STAT_INT") && !strcmp(tkn, "int")))
         {
             tn = tn->next;
-            
-            while (*zcnt >1)
+
+            while (*zcnt > 1)
             {
-                if(!strcmp(peek(st), z0)){
+                if (!strcmp(peek(st), z0))
+                {
                     pop(st);
-                    *zcnt= *zcnt -1;
+                    *zcnt = *zcnt - 1;
                 }
                 else
                     break;
@@ -95,13 +241,27 @@ int expand(grammar *G, parseTree *parent, int * zcnt)
     }
     else
     {
+
+        if(!strcmp(tkn, "EPSILON")){
+            while(!strcmp(peek(st), z0))
+                pop(st);
+            return 1;
+        }
+
         push(st, z0);
-        *zcnt= *zcnt + 1;
+        *zcnt = *zcnt + 1;
         mapNode *rules_list = search(tkn);
         while (rules_list)
         {
             Node *tmp = &(G->rules[rules_list->value]);
             int cnt = 0;
+
+
+            if(predict(tmp, tn)){
+                rules_list= rules_list->next;                    
+                continue;
+            }
+
 
             Stack *temp_stack = createStack(100);
             tmp = tmp->next;
@@ -142,17 +302,20 @@ int expand(grammar *G, parseTree *parent, int * zcnt)
             for (int i = 0; i < cnt; i++)
             {
                 int res = expand(G, parent, zcnt);
+
                 if (res == -1)
                 {
-
-                    if(isEmpty(st))
+                    if (isEmpty(st))
                         return -1;
 
-                    while (!strcmp(peek(st), z0))
+                    while (strcmp(peek(st), z0))
                     {
                         pop(st);
                     }
                     pop(st);
+
+                    if(!strcmp(tn->token, "OPERATOR") || !strcmp(tn->token, "BOOLOP") || !strcmp(tn->lexeme, "array"))
+                        push(st, z0);
 
                     correctness_flag = 0;
                     break;
