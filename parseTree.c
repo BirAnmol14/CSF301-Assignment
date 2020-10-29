@@ -47,6 +47,33 @@ int isT(char *token)
 int predict(Node *tmp, tokenNode *tn)
 {
 
+    if(!strcmp(tmp->name, "DECLARATIONS")){
+        int flag= 0;
+        while(tn){
+            if(!strcmp(tn->lexeme, "jagged")){
+                flag= 1;
+                break;
+            }
+            else if(!strcmp(tn->lexeme, "array")){
+                flag= 2;
+                break;
+            }
+            else if(!strcmp(tn->lexeme, ";"))
+                break;
+            tn= tn->next;
+        }
+        if(!strcmp(tmp->next->name, "PRIMITIVEDECLARATION") && flag== 0){
+            return 0;
+        }
+        if(!strcmp(tmp->next->name, "ARRAYDECLARATION") && flag== 2){
+            return 0;
+        }
+        if(!strcmp(tmp->next->name, "JAGGEDDECLARATION") && flag== 1){
+            return 0;
+        }
+        return 1;
+    }
+
     if (!strcmp(tmp->name, "PRIMITIVEDECLARATION") || !strcmp(tmp->name, "ARRAYDECLARATION") || !strcmp(tmp->name, "J2D") || !strcmp(tmp->name, "J3D") )
     {
         if (strcmp(tmp->next->next->name, "list") && !strcmp(tn->next->lexeme, "list"))
@@ -178,6 +205,55 @@ int predict(Node *tmp, tokenNode *tn)
         return 1;
     }
 
+    if(!strcmp(tmp->name, "ROW3D")){
+        tmp= tmp->next;
+        int flag= 0;
+        while(tmp){
+            if(!strcmp(tmp->name, "ROW3D")){
+                flag= 1;
+                break;
+            }
+            tmp= tmp->next;            
+        }
+
+        int flag2=0;
+        tn= tn->next;
+        while(tn){
+            if(!strcmp(tn->lexeme, "R1")){
+                flag2= 1;
+                break;
+            }
+            else if(!strcmp(tn->lexeme, "declare") || !strcmp(tn->token, "ID"))
+                break;
+            tn= tn->next;
+        }
+        
+        if((flag && flag2) || (!flag && !flag2) )
+            return 0;
+        return 1;        
+    }
+
+    if(!strcmp(tmp->name, "STAT_SIZE")){
+        tmp= tmp->next;
+        int flag= 0;
+        while(tmp){
+            if(!strcmp(tmp->name, "STAT_SIZE")){
+                flag= 1;
+                break;
+            }
+            tmp= tmp->next;            
+        }
+
+        int flag2=0;
+        if(!strcmp(tn->next->lexeme, ";")){
+            flag2=1;
+        }
+        printf("%d %d %s\n", flag, flag2, tn->next->lexeme);
+        if((flag && flag2) || (!flag && !flag2) )
+            return 0;
+        return 1;
+    } 
+
     return 0;
 }
 
@@ -241,7 +317,6 @@ int expand(grammar *G, parseTree *parent, int *zcnt)
     }
     else
     {
-
         if(!strcmp(tkn, "EPSILON")){
             while(!strcmp(peek(st), z0))
                 pop(st);
@@ -314,7 +389,7 @@ int expand(grammar *G, parseTree *parent, int *zcnt)
                     }
                     pop(st);
 
-                    if(!strcmp(tn->token, "OPERATOR") || !strcmp(tn->token, "BOOLOP") || !strcmp(tn->lexeme, "array"))
+                    if(!strcmp(tn->token, "OPERATOR") || !strcmp(tn->token, "BOOLOP") || !strcmp(tn->lexeme, "array") || !strcmp(tn->lexeme, "jagged"))
                         push(st, z0);
 
                     correctness_flag = 0;
@@ -324,7 +399,10 @@ int expand(grammar *G, parseTree *parent, int *zcnt)
 
             if (!correctness_flag)
             {
+                if(!strcmp(tkn, "DIT"))
+                    push(st, z0);                
                 rules_list = rules_list->next;
+
                 tn = temp_tn;
             }
             else

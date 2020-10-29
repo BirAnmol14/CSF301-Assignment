@@ -22,7 +22,7 @@ DIT [ ID .. STAT_INT  ]
 DIT [ STAT_INT .. ID  ]
 DIT [ STAT_INT .. STAT_INT ] 
 DIT [ ID .. ID  ] 
-JAGGEDDECLARATION J2D ROWS
+JAGGEDDECLARATION J2D ROW3D
 J2D declare ID : jagged array [ STAT_INT .. STAT_INT ] [ ] of integer ;
 J2D declare list of variables ID_LIST : jagged array [ STAT_INT .. STAT_INT ] [ ] of integer ;
 ROWS R1 [ STAT_INT ] : size STAT_INT : values { STAT_SIZE } ROWS

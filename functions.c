@@ -46,6 +46,7 @@ void tokeniseSourcecode(char * filename,tokenStream * ts){
 		char line [500];
 		int line_count=0;
 		int line_2 =0;
+		int rcnt=0;
 		while(fscanf(fp,"%[^\n]\n",line)!=EOF){
 			line_count++;
 			printf("%d\t%s\n",line_count,line);
@@ -56,13 +57,18 @@ void tokeniseSourcecode(char * filename,tokenStream * ts){
 			char * tk=strtok(line1," \t");
 			while(tk){
 				char* tmp = getToken(tk);
-				if(!strcmp(tk,"declare")||!strcmp(tk,"R1"))
-				decl_count++;
+				
+				if(!strcmp(tk,"declare")||!strcmp(tk,"R1")){
+					if(!strcmp(tk,"R1"))
+						rcnt++;
+					decl_count++;
+				}
 				ts=addTokenNode(ts,tk,tmp,line_count);
 				tk=strtok(NULL," \t");
 			}
 		}
 		assign_count= line_2 -3 -decl_count;
+		decl_count-= rcnt;
 		fclose(fp);
 	}else{
 		puts("No such File Exists");

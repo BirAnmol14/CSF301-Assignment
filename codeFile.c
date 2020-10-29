@@ -52,7 +52,7 @@ void option1(){
 	}
 
 	puts("\nTokenizing Source Code");
-	tokeniseSourcecode("t2.txt",ts);
+	tokeniseSourcecode("sampleprogram.txt",ts);
 	// printTokenStream(ts);
 
 
