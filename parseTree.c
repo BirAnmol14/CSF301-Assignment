@@ -13,29 +13,29 @@ tokenNode *tn;
 
 void printStack(Stack *st)
 {
-    f = fopen("out.txt", "a");
+    // f = fopen("out.txt", "a");
 
-    int count = st->top;
-    printf("Top- %d\n", count);
-    while (count >= 0)
-    {
-        fprintf(f, "Element %s\n", st->token[count]);
-        count--;
-    }
-    fclose(f);
+    // int count = st->top;
+    // printf("Top- %d\n", count);
+    // while (count >= 0)
+    // {
+    //     fprintf(f, "Element %s\n", st->token[count]);
+    //     count--;
+    // }
+    // fclose(f);
 }
 
 int isT(char *token)
 {
-    f = fopen("out.txt", "a");
-    fprintf(f, "#############################################\n");
-    fprintf(f, "Lexeme- %s and token- %s Next lexeme- %s\n", tn->lexeme, token, tn->next->lexeme);
-    fclose(f);
-    printStack(st);
-    f = fopen("out.txt", "a");
+    // f = fopen("out.txt", "a");
+    // fprintf(f, "#############################################\n");
+    // fprintf(f, "Lexeme- %s and token- %s Next lexeme- %s\n", tn->lexeme, token, tn->next->lexeme);
+    // fclose(f);
+    // printStack(st);
+    // f = fopen("out.txt", "a");
 
-    fprintf(f, "#############################################\n");
-    fclose(f);
+    // fprintf(f, "#############################################\n");
+    // fclose(f);
 
     if (!isNonTerminal(token))
     {
@@ -114,7 +114,7 @@ int predict(Node *tmp, tokenNode *tn)
         if (flag)
             while (tn)
             {
-                printf("lexeme- %s\n", tn->lexeme);
+                // printf("lexeme- %s\n", tn->lexeme);
                 if (!strcmp(tn->token, "OPERATOR"))
                 {
                     return 0;
@@ -144,7 +144,7 @@ int predict(Node *tmp, tokenNode *tn)
         if (flag)
             while (tn)
             {
-                printf("lexeme- %s\n", tn->lexeme);
+                // printf("lexeme- %s\n", tn->lexeme);
                 if (!strcmp(tn->token, "BOOLOP"))
                 {
                     return 0;
@@ -174,7 +174,6 @@ int predict(Node *tmp, tokenNode *tn)
         }
         if (!flag)
             return 0;
-        printf("Flag= %d and 5th lex= %s\n", flag, tn->next->next->next->next->next->lexeme);
         if ((!strcmp(tn->next->next->next->next->next->lexeme, "[")))
         {
             flag2 = 1;
@@ -285,7 +284,7 @@ int predict(Node *tmp, tokenNode *tn)
         {
             flag2 = 1;
         }
-        printf("%d %d %s\n", flag, flag2, tn->next->lexeme);
+        // printf("%d %d %s\n", flag, flag2, tn->next->lexeme);
         if ((flag && flag2) || (!flag && !flag2))
             return 0;
         return 1;
