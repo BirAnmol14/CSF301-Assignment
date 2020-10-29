@@ -143,6 +143,7 @@ void findHashes();
 
 void printParseTree(parseTree *);
 void levelOrder(treeNode *);
+void preOrder(treeNode *);
 typedef struct queueNode{
 	treeNode * tn;
 	struct queueNode * next;
@@ -157,3 +158,8 @@ Queue * newQueue();
 void enqueue(Queue *, treeNode *);
 treeNode * dequeue(Queue *);
 int isEmptyQueue(Queue *);
+
+typedef enum stmt{
+	DECLARATION, 
+	ASSIGNMENT
+}stmtType;

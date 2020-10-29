@@ -6,6 +6,8 @@
 grammar g;
 tokenStream * ts=NULL;
 typeExpressionTable * tab=NULL;
+parseTree * root;
+int flag1, flag2, flag3;
 void printOptions();
 void testOption(int);
 void option1();
@@ -45,27 +47,27 @@ void testOption(int option){
 void option1(){
 	puts("\nOption 1\n");
 	readGrammar("grammar2.txt",&g);
+	
 	// printGrammar(&g);
-	// printMap();
-	if(ts==NULL){
+	
+	// if(ts==NULL){
 		ts=newTokenStream();
-	}
+	// }
 
 	puts("\nTokenizing Source Code");
 	tokeniseSourcecode("sampleprogram.txt",ts);
 	// printTokenStream(ts);
 
 
-	parseTree * root= newTree();
+	root= newTree();
 	if(createParseTree(root , ts, g))
 		printf("\nTree created\n");
 	else
 		printf("\nTree creation failed\n");
-	printf("\n\n\n\n\n");
-	printParseTree(root);
 }
 void option2(){
-	option1();
+
+		option1();
 	puts("option 2");
 	puts("Creating Type Expression Table");
 	tab=newTable();
@@ -123,12 +125,15 @@ void option2(){
 	addType(tab,newType("abc8",Jagged,NULL,newJagTypeExpression(jarr)));
 }
 void option3(){
-	option2();
-	puts("option 3");
+
+		option2();
+	puts("option 3- \n Printing level order tree: \n\n\n");
+	printf("%-10s%-25s%5s", "Level", "Token", "isTerminal\n\n");
+	printParseTree(root);
 }
 void option4(){
-	option3();
-	puts("option 4");
-	puts("Printing Type Expression Table");
+		option3();
+	puts("option 4- \n ");
+	puts("Printing Type Expression Table \n\n\n");
 	printTypeExpressionTable(tab);
 }

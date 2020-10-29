@@ -513,6 +513,16 @@ void findHashes(){
 	}
 }
 
+// Pre order
+
+void preOrder(treeNode *root){
+	if(!root)
+		return;
+	printf("%-10d%-25s%5s\n", root->level, root->token, root->isTerminal? "Terminal": "Non Terminal");
+	preOrder(root->child);
+	preOrder(root->sibling);
+}
+
 void levelOrder(treeNode *root) 
 { 
     if (root == NULL) return; 
@@ -550,7 +560,8 @@ void levelOrder(treeNode *root)
 
 void printParseTree(parseTree * pt){
 	treeNode * head= pt->start;
-	levelOrder(head);
+	// levelOrder(head);
+	preOrder(head);
 }
 
 Queue * newQueue(){
