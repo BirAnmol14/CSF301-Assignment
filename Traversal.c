@@ -240,7 +240,8 @@
                           subsize++;
                           digitlist=digitlist->child->sibling;
                       }
-                      populateJagArrSubrange(jarr,i,j,itoa(subsize));
+                      char* buff = (char*)malloc(sizeof(char)*5);
+                      populateJagArrSubrange(jarr,i,j,itoa(subsize,buff));
 
                       if(rowvals->child->sibling){
                           rowvals=rowvals->child->sibling->sibling;
@@ -365,7 +366,8 @@
                             subsize++;
                             digitlist=digitlist->child->sibling;
                         }
-                        populateJagArrSubrange(jarr,i,j,itoa(subsize));
+                        char* buff = (char*)malloc(sizeof(char)*5);
+                        populateJagArrSubrange(jarr,i,j,itoa(subsize,buff));
                         if(rowvals->child->sibling){
                             rowvals=rowvals->child->sibling->sibling;
                         }
