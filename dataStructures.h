@@ -90,12 +90,24 @@ typedef struct mapNode
 } mapNode;
 
 // Parse Tree
-typedef struct parsetree{
- char* token;
- struct parsetree * child;
-struct parsetree * sibling;
- typeExpression type;
+typedef struct treeNode{
+	int level;
+	char * token;
+	int isTerminal;
+	struct treeNode * child;
+	struct treeNode * sibling;
+	int hasType;
+	typeExpression te;
+}treeNode;
+typedef struct paseTree{
+	treeNode * start;
 }parseTree;
+
+parseTree * newTree();
+treeNode * newTreeNode(int,char *,int, int, int);
+void addSibling(treeNode *,treeNode *);
+void addChild(treeNode *,treeNode *);
+void deleteChild(treeNode *);
 
 typedef struct Stack {
     int top;
@@ -128,3 +140,20 @@ typedef struct allNonTerminals{
 void addNonTerminals(char *);
 int isNonTerminal(char *);
 void findHashes();
+
+void printParseTree(parseTree *);
+void levelOrder(treeNode *);
+typedef struct queueNode{
+	treeNode * tn;
+	struct queueNode * next;
+}queueNode;
+
+typedef struct Queue{
+	queueNode * head;
+	queueNode * tail;
+} Queue;
+
+Queue * newQueue();
+void enqueue(Queue *, treeNode *);
+treeNode * dequeue(Queue *);
+int isEmptyQueue(Queue *);

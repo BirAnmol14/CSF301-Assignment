@@ -46,35 +46,41 @@ int isT(char *token)
 
 int predict(Node *tmp, tokenNode *tn)
 {
-
-    if(!strcmp(tmp->name, "DECLARATIONS")){
-        int flag= 0;
-        while(tn){
-            if(!strcmp(tn->lexeme, "jagged")){
-                flag= 1;
+    if (!strcmp(tmp->name, "DECLARATIONS"))
+    {
+        int flag = 0;
+        while (tn)
+        {
+            if (!strcmp(tn->lexeme, "jagged"))
+            {
+                flag = 1;
                 break;
             }
-            else if(!strcmp(tn->lexeme, "array")){
-                flag= 2;
+            else if (!strcmp(tn->lexeme, "array"))
+            {
+                flag = 2;
                 break;
             }
-            else if(!strcmp(tn->lexeme, ";"))
+            else if (!strcmp(tn->lexeme, ";"))
                 break;
-            tn= tn->next;
+            tn = tn->next;
         }
-        if(!strcmp(tmp->next->name, "PRIMITIVEDECLARATION") && flag== 0){
+        if (!strcmp(tmp->next->name, "PRIMITIVEDECLARATION") && flag == 0)
+        {
             return 0;
         }
-        if(!strcmp(tmp->next->name, "ARRAYDECLARATION") && flag== 2){
+        if (!strcmp(tmp->next->name, "ARRAYDECLARATION") && flag == 2)
+        {
             return 0;
         }
-        if(!strcmp(tmp->next->name, "JAGGEDDECLARATION") && flag== 1){
+        if (!strcmp(tmp->next->name, "JAGGEDDECLARATION") && flag == 1)
+        {
             return 0;
         }
         return 1;
     }
 
-    if (!strcmp(tmp->name, "PRIMITIVEDECLARATION") || !strcmp(tmp->name, "ARRAYDECLARATION") || !strcmp(tmp->name, "J2D") || !strcmp(tmp->name, "J3D") )
+    if (!strcmp(tmp->name, "PRIMITIVEDECLARATION") || !strcmp(tmp->name, "ARRAYDECLARATION") || !strcmp(tmp->name, "J2D") || !strcmp(tmp->name, "J3D"))
     {
         if (strcmp(tmp->next->next->name, "list") && !strcmp(tn->next->lexeme, "list"))
         {
@@ -94,170 +100,201 @@ int predict(Node *tmp, tokenNode *tn)
 
     if (!strcmp(tmp->name, "EXPRESSION"))
     {
-        tmp= tmp->next;
-        int flag=0;
-        while(tmp){
-            if(!strcmp(tmp->name, "OPERATOR")){
-                flag= 1;
+        tmp = tmp->next;
+        int flag = 0;
+        while (tmp)
+        {
+            if (!strcmp(tmp->name, "OPERATOR"))
+            {
+                flag = 1;
                 break;
             }
-            tmp= tmp->next;
+            tmp = tmp->next;
         }
-        if(flag)
-        while(tn){
-            printf("lexeme- %s\n", tn->lexeme);
-            if(!strcmp(tn->token, "OPERATOR")){
-                return 0;
-            }
-            else if(!strcmp(tn->lexeme, ";")){
+        if (flag)
+            while (tn)
+            {
+                printf("lexeme- %s\n", tn->lexeme);
+                if (!strcmp(tn->token, "OPERATOR"))
+                {
+                    return 0;
+                }
+                else if (!strcmp(tn->lexeme, ";"))
+                {
                     return 1;
+                }
+                tn = tn->next;
             }
-            tn= tn->next;
-        }
         return 0;
     }
 
     if (!strcmp(tmp->name, "BOOLEXPRESSION"))
     {
-        tmp= tmp->next;
-        int flag=0;
-        while(tmp){
-            if(!strcmp(tmp->name, "BOOLOP")){
-                flag= 1;
+        tmp = tmp->next;
+        int flag = 0;
+        while (tmp)
+        {
+            if (!strcmp(tmp->name, "BOOLOP"))
+            {
+                flag = 1;
                 break;
             }
-            tmp= tmp->next;
+            tmp = tmp->next;
         }
-        if(flag)
-        while(tn){
-            printf("lexeme- %s\n", tn->lexeme);
-            if(!strcmp(tn->token, "BOOLOP")){
-                return 0;
-            }
-            else if(!strcmp(tn->lexeme, ";")){
+        if (flag)
+            while (tn)
+            {
+                printf("lexeme- %s\n", tn->lexeme);
+                if (!strcmp(tn->token, "BOOLOP"))
+                {
+                    return 0;
+                }
+                else if (!strcmp(tn->lexeme, ";"))
+                {
                     return 1;
+                }
+                tn = tn->next;
             }
-            tn= tn->next;
-        }
         return 0;
     }
 
-    if(!strcmp(tmp->name, "DIMENSION")){
-        tmp= tmp->next;
-        int flag=0;
-        int flag2= 0;
-        while(tmp){
-            if(!strcmp(tmp->name, "DIMENSION")){
-                flag= 1;
+    if (!strcmp(tmp->name, "DIMENSION"))
+    {
+        tmp = tmp->next;
+        int flag = 0;
+        int flag2 = 0;
+        while (tmp)
+        {
+            if (!strcmp(tmp->name, "DIMENSION"))
+            {
+                flag = 1;
                 break;
             }
-            tmp= tmp->next;
+            tmp = tmp->next;
         }
-        if(!flag)
+        if (!flag)
             return 0;
         printf("Flag= %d and 5th lex= %s\n", flag, tn->next->next->next->next->next->lexeme);
-        if((!strcmp(tn->next->next->next->next->next->lexeme, "["))){
-            flag2= 1;
+        if ((!strcmp(tn->next->next->next->next->next->lexeme, "[")))
+        {
+            flag2 = 1;
         }
-        if(flag== 1 && flag2== 1){
+        if (flag == 1 && flag2 == 1)
+        {
             return 0;
-        }       
+        }
 
         return 1;
     }
 
-    if(!strcmp(tmp->name, "STAT_LIST")){
-        tmp= tmp->next;
-        int flag= 0;
-        while(tmp){
-            if(!strcmp(tmp->name, "STAT_LIST")){
-                flag= 1;
+    if (!strcmp(tmp->name, "STAT_LIST"))
+    {
+        tmp = tmp->next;
+        int flag = 0;
+        while (tmp)
+        {
+            if (!strcmp(tmp->name, "STAT_LIST"))
+            {
+                flag = 1;
                 break;
             }
-            tmp= tmp->next;            
+            tmp = tmp->next;
         }
-        if(flag== 0)
+        if (flag == 0)
             return 0;
 
-        if(!strcmp(tn->token, "STAT_INT"))
-            return 0;
-        return 1;
-    }
-
-    if(!strcmp(tmp->name, "ASSIGNMENT") || !strcmp(tmp->name, "SUBEX")){
-        tmp= tmp->next;
-        int flag= 0;
-        while(tmp){
-            if(!strcmp(tmp->name, "ARR_DEF")){
-                flag= 1;
-                break;
-            }
-            tmp= tmp->next;            
-        }
-
-        int flag2=0;
-        if(!strcmp(tn->next->lexeme, "[")){
-            flag2=1;
-        }
-        
-        if((flag && flag2) || (!flag && !flag2) )
+        if (!strcmp(tn->token, "STAT_INT"))
             return 0;
         return 1;
     }
 
-    if(!strcmp(tmp->name, "ROW3D")){
-        tmp= tmp->next;
-        int flag= 0;
-        while(tmp){
-            if(!strcmp(tmp->name, "ROW3D")){
-                flag= 1;
+    if (!strcmp(tmp->name, "ASSIGNMENT") || !strcmp(tmp->name, "SUBEX"))
+    {
+        tmp = tmp->next;
+        int flag = 0;
+        while (tmp)
+        {
+            if (!strcmp(tmp->name, "ARR_DEF"))
+            {
+                flag = 1;
                 break;
             }
-            tmp= tmp->next;            
+            tmp = tmp->next;
         }
 
-        int flag2=0;
-        tn= tn->next;
-        while(tn){
-            if(!strcmp(tn->lexeme, "R1")){
-                flag2= 1;
-                break;
-            }
-            else if(!strcmp(tn->lexeme, "declare") || !strcmp(tn->token, "ID"))
-                break;
-            tn= tn->next;
+        int flag2 = 0;
+        if (!strcmp(tn->next->lexeme, "["))
+        {
+            flag2 = 1;
         }
-        
-        if((flag && flag2) || (!flag && !flag2) )
+
+        if ((flag && flag2) || (!flag && !flag2))
             return 0;
-        return 1;        
+        return 1;
     }
 
-    if(!strcmp(tmp->name, "STAT_SIZE")){
-        tmp= tmp->next;
-        int flag= 0;
-        while(tmp){
-            if(!strcmp(tmp->name, "STAT_SIZE")){
-                flag= 1;
+    if (!strcmp(tmp->name, "ROW3D"))
+    {
+        tmp = tmp->next;
+        int flag = 0;
+        while (tmp)
+        {
+            if (!strcmp(tmp->name, "ROW3D"))
+            {
+                flag = 1;
                 break;
             }
-            tmp= tmp->next;            
+            tmp = tmp->next;
         }
 
-        int flag2=0;
-        if(!strcmp(tn->next->lexeme, ";")){
-            flag2=1;
+        int flag2 = 0;
+        tn = tn->next;
+        while (tn)
+        {
+            if (!strcmp(tn->lexeme, "R1"))
+            {
+                flag2 = 1;
+                break;
+            }
+            else if (!strcmp(tn->lexeme, "declare") || !strcmp(tn->token, "ID"))
+                break;
+            tn = tn->next;
+        }
+
+        if ((flag && flag2) || (!flag && !flag2))
+            return 0;
+        return 1;
+    }
+
+    if (!strcmp(tmp->name, "STAT_SIZE"))
+    {
+        tmp = tmp->next;
+        int flag = 0;
+        while (tmp)
+        {
+            if (!strcmp(tmp->name, "STAT_SIZE"))
+            {
+                flag = 1;
+                break;
+            }
+            tmp = tmp->next;
+        }
+
+        int flag2 = 0;
+        if (!strcmp(tn->next->lexeme, ";"))
+        {
+            flag2 = 1;
         }
         printf("%d %d %s\n", flag, flag2, tn->next->lexeme);
-        if((flag && flag2) || (!flag && !flag2) )
+        if ((flag && flag2) || (!flag && !flag2))
             return 0;
         return 1;
-    } 
+    }
 
     return 0;
 }
 
-int createParseTree(parseTree *t, tokenStream *s, grammar G)
+int createParseTree(parseTree *pt, tokenStream *s, grammar G)
 {
     z0 = (char *)malloc(sizeof(char) * 5);
     strcpy(z0, "@$@$");
@@ -265,7 +302,8 @@ int createParseTree(parseTree *t, tokenStream *s, grammar G)
     strcpy(baseKwd, "PROGRAM");
 
     st = createStack(MAXCAPACITY);
-    t = newNode(baseKwd);
+    treeNode *t = newTreeNode(0, "PROGRAM", 1, 0, 0);
+    pt->start= t;
     push(st, baseKwd); // push to stack
     int zcnt = 0;
     int result;
@@ -276,15 +314,16 @@ int createParseTree(parseTree *t, tokenStream *s, grammar G)
     return result; // result= 1 for successful tree creation, else -1
 }
 
-int expand(grammar *G, parseTree *parent, int *zcnt)
+int expand(grammar *G, treeNode *parent, int *zcnt)
 {
 
-                    if(!tn->next && !strcmp(tn->lexeme, "}")){
-                        while(!isEmpty(st))
-                            pop(st);
-                        printStack(st);
-                        return 1;
-                    }
+    if (!tn->next && !strcmp(tn->lexeme, "}"))
+    {
+        while (!isEmpty(st))
+            pop(st);
+        printStack(st);
+        return 1;
+    }
 
     char *tkn = pop(st);
     int flag = 1;
@@ -317,8 +356,9 @@ int expand(grammar *G, parseTree *parent, int *zcnt)
     }
     else
     {
-        if(!strcmp(tkn, "EPSILON")){
-            while(!strcmp(peek(st), z0))
+        if (!strcmp(tkn, "EPSILON"))
+        {
+            while (!strcmp(peek(st), z0))
                 pop(st);
             return 1;
         }
@@ -331,12 +371,11 @@ int expand(grammar *G, parseTree *parent, int *zcnt)
             Node *tmp = &(G->rules[rules_list->value]);
             int cnt = 0;
 
-
-            if(predict(tmp, tn)){
-                rules_list= rules_list->next;                    
+            if (predict(tmp, tn))
+            {
+                rules_list = rules_list->next;
                 continue;
             }
-
 
             Stack *temp_stack = createStack(100);
             tmp = tmp->next;
@@ -376,10 +415,19 @@ int expand(grammar *G, parseTree *parent, int *zcnt)
             int correctness_flag = 1;
             for (int i = 0; i < cnt; i++)
             {
-                int res = expand(G, parent, zcnt);
+                char * nodeToken= peek(st);
+
+                treeNode * nd;
+                if(!isNonTerminal(nodeToken))            
+                    nd= newTreeNode(parent->level+1, tn->lexeme, tn->line, 0, !isNonTerminal(nodeToken));
+                else
+                    nd= newTreeNode(parent->level+1, nodeToken, tn->line, 0, !isNonTerminal(nodeToken));
+                
+                int res = expand(G, nd, zcnt);
 
                 if (res == -1)
                 {
+                    deleteChild(parent);
                     if (isEmpty(st))
                         return -1;
 
@@ -389,18 +437,21 @@ int expand(grammar *G, parseTree *parent, int *zcnt)
                     }
                     pop(st);
 
-                    if(!strcmp(tn->token, "OPERATOR") || !strcmp(tn->token, "BOOLOP") || !strcmp(tn->lexeme, "array") || !strcmp(tn->lexeme, "jagged"))
+                    if (!strcmp(tn->token, "OPERATOR") || !strcmp(tn->token, "BOOLOP") || !strcmp(tn->lexeme, "array") || !strcmp(tn->lexeme, "jagged"))
                         push(st, z0);
 
                     correctness_flag = 0;
                     break;
                 }
+                else{
+                    addChild(parent, nd);
+                }
             }
 
             if (!correctness_flag)
             {
-                if(!strcmp(tkn, "DIT"))
-                    push(st, z0);                
+                if (!strcmp(tkn, "DIT"))
+                    push(st, z0);
                 rules_list = rules_list->next;
 
                 tn = temp_tn;

@@ -56,12 +56,13 @@ void option1(){
 	// printTokenStream(ts);
 
 
-	parseTree * root;
+	parseTree * root= newTree();
 	if(createParseTree(root , ts, g))
 		printf("\nTree created\n");
 	else
 		printf("\nTree creation failed\n");
-	// findHashes();
+	printf("\n\n\n\n\n");
+	printParseTree(root);
 }
 void option2(){
 	option1();

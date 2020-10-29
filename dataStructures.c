@@ -372,55 +372,58 @@ void printMap()
 }
 
 // Parse Tree DS
-parseTree * newNode(char * tkn){
-	parseTree *node= (parseTree *)malloc(sizeof(parseTree));
-	node->token= tkn;
-	node->child= NULL;
 
-	return node;
+
+parseTree * newTree(){
+	parseTree * pt=malloc(1*sizeof(parseTree));
+	pt->start=NULL;
+	return pt;
+}
+treeNode * newTreeNode(int level,char * token,int line,int hasType, int isTerminal){
+	treeNode * tn=malloc(1*sizeof(treeNode));
+	tn->level=level;
+	tn->isTerminal= isTerminal;
+	tn->token= (char*)malloc(sizeof(char)* (strlen(token)+1));
+	strcpy(tn->token, token);
+	tn->hasType=hasType;
+	tn->child=NULL;
+	tn->sibling=NULL;
+	if(hasType==0){
+
+	}else{
+		(tn->te).rectangular=NULL;		// manully add Type while traversing
+		(tn->te).jagged=NULL;
+	}
+	return tn;
+}
+void addSibling(treeNode * tn,treeNode *sib){
+	treeNode * tmp=tn;
+	while(tn->sibling){
+		tn=tn->sibling;
+	}
+	tn->sibling=sib;
+}
+void addChild(treeNode *tn, treeNode *chi){
+	if(tn->child){
+		addSibling(tn->child,chi);
+	}
+	else{
+		tn->child=chi;
+	}
+}
+void deleteChild(treeNode *tn){
+	treeNode * t=tn->child;
+	while(t){
+		treeNode * tt;
+		tt= t;
+		t= t->sibling;
+		free(tt);
+	}
+	tn->child=NULL;
 }
 
-parseTree * addChild(parseTree * parent, parseTree * child){
-	// if(parent->child== NULL){
-	// 	parent->child= (parseTree *)malloc(sizeof(parseTree));
-	// 	parent->child= child;
-	// }
-	// else{
-	// 	parseTree * chd= parent->child;
-	// 	while(chd->sibling != NULL){
-	// 		chd= chd->sibling;
-	// 	}
-	// 	chd->sibling= child;
-	// 	child->sibling= NULL;
-	// }
-	// return parent;
-	return NULL;
-}
 
-void freeChildren(parseTree * node){
-	// printf("Parent recieved-%s\n", node->token);
-	// parseTree * child= node->child;
-	// if(child== NULL){
-	// 	printf("No child\n");
-	// 	return;
-	// }
-	// printf("First child- %s\n", child->token);
-	// node->child= NULL;
-	// parseTree * temp;
-	// int cnt=0;
-	// while(child->sibling != NULL){
-	// 	// printf("Sibling no- %d\n", cnt++);
-	// 	temp= child->sibling;
-	// 	printf("Deleting children of %s if sibling exists\n", child->token);
-	// 	freeChildren(child);
-	// 	printf("Deleting child %s if sibling exists\n", child->token);
-	// 	free(child);
-	// 	child= temp;
-	// }
-	// printf("Last deletion after loop\n");
-	// freeChildren(child);
-	// free(child);
-}
+
 // Stack
 
 Stack* createStack(unsigned capacity)
@@ -509,3 +512,82 @@ void findHashes(){
 		tmp=tmp->next;
 	}
 }
+
+void levelOrder(treeNode *root) 
+{ 
+    if (root == NULL) return; 
+
+    Queue* q= newQueue();
+
+    treeNode *curr; 
+  
+    enqueue(q, root); 
+	int lvl=0;
+	printf("\n\n%d\n\n", 0);
+    while (!isEmptyQueue(q)) 
+    { 
+        curr = dequeue(q);  
+		if(lvl != curr->level){
+			printf("\n\n%d \n\n", curr->level);
+			lvl= curr->level;
+		}
+        if (curr == NULL) 
+        { 
+           enqueue(q, NULL); 
+        } 
+          
+        else { 
+			treeNode * child= curr->child;
+
+			while(child){
+				enqueue(q, child);
+				child= child->sibling;
+			}
+            printf("%s ", curr->token); 
+        } 
+    } 
+} 
+
+void printParseTree(parseTree * pt){
+	treeNode * head= pt->start;
+	levelOrder(head);
+}
+
+Queue * newQueue(){
+	Queue * tq= (Queue *)malloc(sizeof(Queue));
+	tq->head= tq->tail= NULL;
+	return tq;
+}
+
+void enqueue(Queue *q, treeNode *t){
+	if(!q->head){
+		q->head= (queueNode *)malloc(sizeof(queueNode));
+		q->head->tn= t;
+		q->head->next= NULL;
+		q->tail= q->head;
+	}
+	else{
+		q->tail->next= (queueNode *)malloc(sizeof(queueNode));
+		q->tail= q->tail->next;
+		q->tail->tn= t;
+		q->tail->next= NULL;
+	}
+}
+
+treeNode * dequeue(Queue *q){
+	if(!q->head){
+		return NULL;
+	}
+	else{
+		queueNode * _tm = q->head;
+		q->head= q->head->next;
+		return _tm->tn;
+	}
+}
+
+int isEmptyQueue(Queue *q){
+	if(!q->head)
+		return 1;
+	return 0;
+}
+
