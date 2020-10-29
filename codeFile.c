@@ -15,6 +15,9 @@ void option2();
 void option3();
 void option4();
 int main() {
+	flag1= 0;
+	flag2= 0;
+	flag3= 0;
 	//Driver Function
 	int option;
 	do{
@@ -45,6 +48,8 @@ void testOption(int option){
 	}
 }
 void option1(){
+	if(!flag1)
+	{
 	puts("\nOption 1\n");
 	readGrammar("grammar2.txt",&g);
 	
@@ -61,15 +66,21 @@ void option1(){
 
 	root= newTree();
 	if(createParseTree(root , ts, g))
-		printf("\nTree created\n");
+		printf("\nParse Tree created successfully\n");
 	else
 		printf("\nTree creation failed\n");
+	}
+	else{
+		printf("\nParse Tree created successfully\n");	
+	}
+	
+	flag1= 1;
 }
 void option2(){
-
-		option1();
+	if(!flag2){
+	option1();
 	puts("option 2");
-	puts("Creating Type Expression Table");
+	puts("Traversing Parse Tree and Creating Type Expression Table");
 	tab=newTable();
 
 	//Populating Primitive variables
@@ -123,16 +134,32 @@ void option2(){
 	populateJagArrSubrange(jarr,3,2,"4");
 	populateJagArrSubrange(jarr,3,3,"4");
 	addType(tab,newType("abc8",Jagged,NULL,newJagTypeExpression(jarr)));
+	}
+	else{
+		puts("option 2");
+	puts("Traversing Parse Tree and Creating Type Expression Table");
+	}
+	flag2= 1;
 }
 void option3(){
 
-		option2();
+	if(!flag3){
+
+	option2();
 	puts("option 3- \n Printing level order tree: \n\n\n");
 	printf("%-10s%-25s%5s", "Level", "Token", "isTerminal\n\n");
 	printParseTree(root);
+	}
+	else{
+	puts("option 3- \n Printing level order tree: \n\n\n");
+	printf("%-10s%-25s%5s", "Level", "Token", "isTerminal\n\n");
+	printParseTree(root);		
+	}
+
+	flag3= 1;
 }
 void option4(){
-		option3();
+	option3();
 	puts("option 4- \n ");
 	puts("Printing Type Expression Table \n\n\n");
 	printTypeExpressionTable(tab);
