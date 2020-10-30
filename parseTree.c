@@ -1,3 +1,15 @@
+/* 
+ Group number- 40
+
+ Group Members:-
+
+ 		NAME 						ID
+ 1. Bir Anmol Singh 		2018A7PS0261P
+ 2. Gitansh Pujari 			2018A7PS0163P
+ 3. Rahul Barigidad 		2018A7PS0220P
+ 4. Tejas Tiwari 			2018A7PS0280P
+*/
+
 #include "functions.h"
 #include "parseTreeFunctions.h"
 #include <stdio.h>
@@ -13,30 +25,16 @@ tokenNode *tn;
 
 void printStack(Stack *st)
 {
-    // f = fopen("out.txt", "a");
-
-    // int count = st->top;
-    // printf("Top- %d\n", count);
-    // while (count >= 0)
-    // {
-    //     fprintf(f, "Element %s\n", st->token[count]);
-    //     count--;
-    // }
-    // fclose(f);
+    int count = st->top;
+    while (count >= 0)
+    {
+        printf("Element %s\n", st->token[count]);
+        count--;
+    }
 }
 
 int isT(char *token)
 {
-    // f = fopen("out.txt", "a");
-    // fprintf(f, "#############################################\n");
-    // fprintf(f, "Lexeme- %s and token- %s Next lexeme- %s\n", tn->lexeme, token, tn->next->lexeme);
-    // fclose(f);
-    // printStack(st);
-    // f = fopen("out.txt", "a");
-
-    // fprintf(f, "#############################################\n");
-    // fclose(f);
-
     if (!isNonTerminal(token))
     {
         return 1;
@@ -114,7 +112,6 @@ int predict(Node *tmp, tokenNode *tn)
         if (flag)
             while (tn)
             {
-                // printf("lexeme- %s\n", tn->lexeme);
                 if (!strcmp(tn->token, "OPERATOR"))
                 {
                     return 0;
@@ -144,7 +141,6 @@ int predict(Node *tmp, tokenNode *tn)
         if (flag)
             while (tn)
             {
-                // printf("lexeme- %s\n", tn->lexeme);
                 if (!strcmp(tn->token, "BOOLOP"))
                 {
                     return 0;
@@ -284,7 +280,6 @@ int predict(Node *tmp, tokenNode *tn)
         {
             flag2 = 1;
         }
-        // printf("%d %d %s\n", flag, flag2, tn->next->lexeme);
         if ((flag && flag2) || (!flag && !flag2))
             return 0;
         return 1;
@@ -302,7 +297,7 @@ int createParseTree(parseTree *pt, tokenStream *s, grammar G)
 
     st = createStack(MAXCAPACITY);
     treeNode *t = newTreeNode(0, "PROGRAM", 1, 0, 0);
-    pt->start= t;
+    pt->start = t;
     push(st, baseKwd); // push to stack
     int zcnt = 0;
     int result;
@@ -320,7 +315,7 @@ int expand(grammar *G, treeNode *parent, int *zcnt)
     {
         while (!isEmpty(st))
             pop(st);
-        printStack(st);
+        // printStack(st);
         return 1;
     }
 
@@ -414,14 +409,14 @@ int expand(grammar *G, treeNode *parent, int *zcnt)
             int correctness_flag = 1;
             for (int i = 0; i < cnt; i++)
             {
-                char * nodeToken= peek(st);
+                char *nodeToken = peek(st);
 
-                treeNode * nd;
-                if(!isNonTerminal(nodeToken))            
-                    nd= newTreeNode(parent->level+1, tn->lexeme, tn->line, 0, !isNonTerminal(nodeToken));
+                treeNode *nd;
+                if (!isNonTerminal(nodeToken))
+                    nd = newTreeNode(parent->level + 1, tn->lexeme, tn->line, 0, !isNonTerminal(nodeToken));
                 else
-                    nd= newTreeNode(parent->level+1, nodeToken, tn->line, 0, !isNonTerminal(nodeToken));
-                
+                    nd = newTreeNode(parent->level + 1, nodeToken, tn->line, 0, !isNonTerminal(nodeToken));
+
                 int res = expand(G, nd, zcnt);
 
                 if (res == -1)
@@ -442,7 +437,8 @@ int expand(grammar *G, treeNode *parent, int *zcnt)
                     correctness_flag = 0;
                     break;
                 }
-                else{
+                else
+                {
                     addChild(parent, nd);
                 }
             }

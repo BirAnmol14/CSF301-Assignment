@@ -1,3 +1,15 @@
+/* 
+ Group number- 40
+
+ Group Members:-
+
+ 		NAME 						ID
+ 1. Bir Anmol Singh 		2018A7PS0261P
+ 2. Gitansh Pujari 			2018A7PS0163P
+ 3. Rahul Barigidad 		2018A7PS0220P
+ 4. Tejas Tiwari 			2018A7PS0280P
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -382,6 +394,7 @@ parseTree * newTree(){
 treeNode * newTreeNode(int level,char * token,int line,int hasType, int isTerminal){
 	treeNode * tn=malloc(1*sizeof(treeNode));
 	tn->level=level;
+	tn->line= line;
 	tn->isTerminal= isTerminal;
 	tn->token= (char*)malloc(sizeof(char)* (strlen(token)+1));
 	strcpy(tn->token, token);
@@ -518,7 +531,28 @@ void findHashes(){
 void preOrder(treeNode *root){
 	if(!root)
 		return;
-	printf("%-10d%-25s%5s\n", root->level, root->token, root->isTerminal? "Terminal": "Non Terminal");
+	char * typeE= (char*)malloc(25 * sizeof(char));
+	strcpy(typeE, "def");
+	if(root->hasType){
+		if(root->c== Primitive){
+			if(root->te.primType == Int)
+			strcpy(typeE, "Integer");
+			if(root->te.primType == Bool)
+			strcpy(typeE, "Boolean");
+			if(root->te.primType == Real)
+			strcpy(typeE, "Real");
+		}
+		if(root->c== Rectangular){
+			strcpy(typeE, "Rect Array");
+		}
+		if(root->c== Jagged){
+			strcpy(typeE, "Jagged Array");
+		}
+	}
+	char ln[20];
+	itoa(root->line, ln); 
+	printf("%-25s%-20s%-15s%-12s%10s%10d\n", root->token, root->isTerminal? "Terminal": "Non Terminal", root->hasType? !strcmp(typeE, "def") ? "Primitive" : typeE : "NA", root->isTerminal? root->token : "NA", root->isTerminal? ln: "NA", root->level);
+
 	preOrder(root->child);
 	preOrder(root->sibling);
 }

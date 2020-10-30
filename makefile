@@ -1,3 +1,2 @@
 all:
-	gcc -o exec -g codeFile.c dataStructures.c functions.c parseTreeFunctions.c
-	./exec
+	gcc -o exec -g codeFile.c dataStructures.c functions.c parseTree.c Traversal.c

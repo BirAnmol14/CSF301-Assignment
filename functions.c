@@ -1,3 +1,15 @@
+/* 
+ Group number- 40
+
+ Group Members:-
+
+ 		NAME 						ID
+ 1. Bir Anmol Singh 		2018A7PS0261P
+ 2. Gitansh Pujari 			2018A7PS0163P
+ 3. Rahul Barigidad 		2018A7PS0220P
+ 4. Tejas Tiwari 			2018A7PS0280P
+*/
+
 #include "functions.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,7 +21,7 @@ void readGrammar(char *filename, grammar *g)
 	newGrammar(filename, g);
 	puts("Reading Grammar");
 	FILE *fp = fopen(filename, "r");
-	FILE *fp1 = fopen("LHS.txt", "w");
+	// FILE *fp1 = fopen("LHS.txt", "w");
 	if (fp)
 	{
 		char *temp = (char *)malloc(sizeof(char) * 500);
@@ -27,7 +39,7 @@ void readGrammar(char *filename, grammar *g)
 					newLHS(&g->rules[line], tk);
 					i++;
 					add(tk, line);
-					fprintf(fp1, "%s\n", tk);
+					// fprintf(fp1, "%s\n", tk);
 				}
 				else
 				{
@@ -48,7 +60,7 @@ void readGrammar(char *filename, grammar *g)
 		}
 		free(temp);
 		mapToLL();
-		fclose(fp1);
+		// fclose(fp1);
 
 		fclose(fp);
 	}
