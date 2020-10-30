@@ -544,12 +544,11 @@ teStruct * getTypeExpressionfor(treeNode * node, typeExpressionTable * te){
     
     teStruct* tes= (teStruct *)malloc(sizeof(teStruct));
 
-    printf("nd-tkn= %s", node->token);
+    printf("nd-tkn= %s\n", node->token);
     if(!(node->child)){
         Type * temp_tp= searchTET(node->token, te);
         tes->te= &temp_tp->field4;
         tes->c= temp_tp->field2;
-        printf("hi\n");
         return tes;
     }
     else if(!strcmp(node->token,"ARR_DEF") || !strcmp(node->token,"STAT_INT")){
@@ -564,7 +563,6 @@ teStruct * getTypeExpressionfor(treeNode * node, typeExpressionTable * te){
     }
     else if(!strcmp(node->token,"ID") || !strcmp(node->token,"SUBEX"))
     {
-        printf("hello\n");
         node->hasType= 1;
         tes= getTypeExpressionfor(node->child,te);
         node->te= *(tes->te);
@@ -583,20 +581,6 @@ teStruct * getTypeExpressionfor(treeNode * node, typeExpressionTable * te){
 
     return tes;
 }
-
-// ComputeValidExpression(node id, node op, node expr){
-// TypeExpression idte=getExpressionFor(id);
-// TypeExpression exprte=getExpression(expr);
-
-// If(exprte==idte){
-// //correct, populate typeExpression of op as same unless op.child is /
-// If it is divide, populate as real
-// Return typeExpression of operator;
-// }
-// Else typeError, manually figure out the type
-// Set typeExpression of operator the same as the one which is capable of overriding the other in id or expr.
-// Return typeExpression of the operator
-// }
 
 teStruct * ComputeValidExpression(treeNode * id, treeNode * op, treeNode * expr, typeExpressionTable * tb){
     teStruct * idte=getTypeExpressionfor(id, tb);
