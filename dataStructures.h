@@ -163,3 +163,8 @@ typedef enum stmt{
 	DECLARATION, 
 	ASSIGNMENT
 }stmtType;
+
+typedef struct {
+	typeExpression * te;
+	category c;
+} teStruct;

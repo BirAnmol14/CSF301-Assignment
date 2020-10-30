@@ -7,5 +7,7 @@ int isValidVarId(char *);
 void newError(int line, stmtType, char *op, char *lexeme1, category c1, typeExpression te1, char * lexeme2, category c2, typeExpression te2, int level, char * msg);
 void traverseParseTree(parseTree *root, typeExpressionTable *te);
 treeNode *traverseDeclarationTree(treeNode *root, typeExpressionTable *te);
-typeExpression *searchTET(char *varname, typeExpressionTable *te);
+Type *searchTET(char *varname, typeExpressionTable *te);
 void traverseAssignmentTree(treeNode *root, typeExpressionTable *te);
+teStruct * ComputeValidExpression(treeNode * id, treeNode * op, treeNode * expr, typeExpressionTable * tb);
+teStruct * getTypeExpressionfor(treeNode * node, typeExpressionTable * te);

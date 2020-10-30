@@ -507,14 +507,14 @@ treeNode *traverseDeclarationTree(treeNode *root, typeExpressionTable *te)
 return curDec;
 }
 
-typeExpression *searchTET(char *varname, typeExpressionTable *te)
+Type *searchTET(char *varname, typeExpressionTable *te)
 {
     for (int i = 0;; i++)
     {
         Type *curtype = te->arr[i];
         if (!strcmp(curtype->field1, varname))
         {
-            return &curtype->field4;
+            return curtype;
         }
     }
     return NULL;
@@ -540,23 +540,131 @@ typeExpression *searchTET(char *varname, typeExpressionTable *te)
 // OPERATOR *
 // OPERATOR /
 
+teStruct * getTypeExpressionfor(treeNode * node, typeExpressionTable * te){
+    
+    teStruct* tes= (teStruct *)malloc(sizeof(teStruct));
 
-void traverseAssignmentTree(treeNode *root, typeExpressionTable *te)
-{
-    treeNode *list = root;
-    for(int i=0; i< assign_count; i++){
+    printf("nd-tkn= %s", node->token);
+    if(!(node->child)){
+        Type * temp_tp= searchTET(node->token, te);
+        tes->te= &temp_tp->field4;
+        tes->c= temp_tp->field2;
+        printf("hi\n");
+        return tes;
+    }
+    else if(!strcmp(node->token,"ARR_DEF") || !strcmp(node->token,"STAT_INT")){
+        typeExpression * texp= (typeExpression *)malloc(sizeof(typeExpression));
+        *texp= newPrimTypeExpression(getType("integer")); 
+        node->hasType= 1;
+        node->te= *texp;
         
-        printf("tkn= %s\n", list->token);
+        tes->te= texp;
+        tes->c= Primitive;
+        return tes;
+    }
+    else if(!strcmp(node->token,"ID") || !strcmp(node->token,"SUBEX"))
+    {
+        printf("hello\n");
+        node->hasType= 1;
+        tes= getTypeExpressionfor(node->child,te);
+        node->te= *(tes->te);
 
-        treeNode * tmp_tn= list->child;
-        if(!strcmp(tmp_tn->token, "ID")){
-            typeExpression * lhs= searchTET(tmp_tn->child->token, te);
-            typeExpression ** rhsArr;
-            
+        return tes;
+    }
+
+    if(!node->child->sibling){
+        tes= getTypeExpressionfor(node->child, te);
+        node->hasType= 1;
+        node->te= *(tes->te);
+        return tes;
+    }
+    node->hasType= 1;
+    tes= ComputeValidExpression(node->child, node->child->sibling, node->child->sibling->sibling, te);
+
+    return tes;
+}
+
+// ComputeValidExpression(node id, node op, node expr){
+// TypeExpression idte=getExpressionFor(id);
+// TypeExpression exprte=getExpression(expr);
+
+// If(exprte==idte){
+// //correct, populate typeExpression of op as same unless op.child is /
+// If it is divide, populate as real
+// Return typeExpression of operator;
+// }
+// Else typeError, manually figure out the type
+// Set typeExpression of operator the same as the one which is capable of overriding the other in id or expr.
+// Return typeExpression of the operator
+// }
+
+teStruct * ComputeValidExpression(treeNode * id, treeNode * op, treeNode * expr, typeExpressionTable * tb){
+    teStruct * idte=getTypeExpressionfor(id, tb);
+    teStruct * expte=getTypeExpressionfor(expr, tb);
+
+    char * te;
+    char * exp;
+
+    if(idte->c== Primitive){
+        te= printPrimType(idte->te->primType);
+    }
+    else if(idte->c== Rectangular){
+        te= printRectArr(idte->te->rectangular);
+    }
+    else if(idte->c== Jagged){
+        te= printJagArr(idte->te->jagged);
+    }
+
+    if(expte->c== Primitive){
+        exp= printPrimType(expte->te->primType);
+    }
+    else if(expte->c== Rectangular){
+        exp= printRectArr(expte->te->rectangular);
+    }
+    else if(expte->c== Jagged){
+        exp= printJagArr(expte->te->jagged);
+    }
+
+    teStruct * ts= (teStruct *)malloc(sizeof(teStruct));
+
+    if(!strcmp(te, exp)){
+        if(!strcmp(op->child->token,"/") && idte->c== Primitive){
+            op->hasType= 1;
+            op->te= newPrimTypeExpression(getType("real"));
+            ts->c= Primitive;
+            ts->te= &(op->te);
         }
+        else if(strcmp(op->child->token,"/")){
+            op->hasType= 1;
+            op->te= *(idte->te);   
+            ts->c= idte->c;
+            ts->te= idte->te;      
+        }
+        return ts;
+    }
+    return NULL;
+}
 
-        
-        list= list->sibling;
+void traverseAssignmentTree(treeNode * root, typeExpressionTable * te){
+    treeNode * curAss= root;
+    for(int i=0; i<assign_count;i++){
+
+        treeNode * tmp_tn= curAss->child;
+        Type * lhs;
+
+        if(!strcmp(tmp_tn->token, "ID")){
+            lhs= searchTET(tmp_tn->child->token, te);            
+        }
+        if(!strcmp(tmp_tn->token, "ARR_DEF")){
+            lhs= (Type *)malloc(sizeof(Type));
+            lhs->field4= newPrimTypeExpression(getType("integer"));
+        }
+        curAss->child->hasType= 1;
+        curAss->child->te= lhs->field4;
+        teStruct * rhs= getTypeExpressionfor(curAss->child->sibling->sibling, te);
+        curAss->child->sibling->sibling->hasType= 1;
+        curAss->child->sibling->sibling->te= *(rhs->te);
+        curAss= curAss->sibling;
     }
     printf("Traversing successful\n");
 
